@@ -18,4 +18,4 @@
 
 #define CAN_HEIGHT 1         /* can height above canvas */
 #define VALVE_LATENCY 0.15   /* valve release latency (e.g. BLE / physical) */
-
+#define TEMPLATE_SCALE 0.5   /* target scale */

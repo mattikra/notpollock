@@ -38,7 +38,10 @@
     self.fakeMarkerDetector = [FakeMarkerDetector new];
     NSURL* templateURL = [[NSBundle mainBundle] URLForImageResource:@"template"];
     self.behaviour = [[BEHAVIOUR_CLASS alloc] initWithTemplateURL:templateURL];
-    self.fakeTracking = YES;
+    self.behaviour.idleHeight = CAN_HEIGHT;
+    self.behaviour.templateScale = TEMPLATE_SCALE;
+    self.behaviour.releaseDelay = VALVE_LATENCY;
+    self.fakeTracking = NO;
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
