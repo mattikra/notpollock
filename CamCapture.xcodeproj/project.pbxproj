@@ -11,7 +11,6 @@
 		3987C8F51CD9613B004031DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987C8F41CD9613B004031DC /* main.m */; };
 		3987C8F71CD9613B004031DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3987C8F61CD9613B004031DC /* Assets.xcassets */; };
 		3987C8FA1CD9613B004031DC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987C8F81CD9613B004031DC /* MainMenu.xib */; };
-		3987C9051CD9613B004031DC /* CamCaptureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987C9041CD9613B004031DC /* CamCaptureTests.m */; };
 		3987C9211CD9621E004031DC /* CameraGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987C9201CD9621E004031DC /* CameraGrabber.m */; };
 		3987C9231CD96425004031DC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3987C9221CD96425004031DC /* AVFoundation.framework */; };
 		39A5231D1CE8BB0600990789 /* MarkerDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A5231C1CE8BB0600990789 /* MarkerDetector.m */; };
@@ -21,16 +20,6 @@
 		39B06D8A1CECA41F003AD76E /* ValveCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B06D891CECA41F003AD76E /* ValveCommunicator.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		3987C9011CD9613B004031DC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3987C8E51CD9613B004031DC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3987C8EC1CD9613B004031DC;
-			remoteInfo = CamCapture;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		3987C8ED1CD9613B004031DC /* CamCapture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CamCapture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3987C8F01CD9613B004031DC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -39,7 +28,6 @@
 		3987C8F61CD9613B004031DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3987C8F91CD9613B004031DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		3987C8FB1CD9613B004031DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3987C9001CD9613B004031DC /* CamCaptureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CamCaptureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3987C9041CD9613B004031DC /* CamCaptureTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CamCaptureTests.m; sourceTree = "<group>"; };
 		3987C9061CD9613B004031DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3987C90F1CD9613B004031DC /* CamCaptureUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CamCaptureUITests.m; sourceTree = "<group>"; };
@@ -70,13 +58,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3987C8FD1CD9613B004031DC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -96,7 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				3987C8ED1CD9613B004031DC /* CamCapture.app */,
-				3987C9001CD9613B004031DC /* CamCaptureTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -173,24 +153,6 @@
 			productReference = 3987C8ED1CD9613B004031DC /* CamCapture.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3987C8FF1CD9613B004031DC /* CamCaptureTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3987C9171CD9613B004031DC /* Build configuration list for PBXNativeTarget "CamCaptureTests" */;
-			buildPhases = (
-				3987C8FC1CD9613B004031DC /* Sources */,
-				3987C8FD1CD9613B004031DC /* Frameworks */,
-				3987C8FE1CD9613B004031DC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3987C9021CD9613B004031DC /* PBXTargetDependency */,
-			);
-			name = CamCaptureTests;
-			productName = CamCaptureTests;
-			productReference = 3987C9001CD9613B004031DC /* CamCaptureTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -202,10 +164,6 @@
 				TargetAttributes = {
 					3987C8EC1CD9613B004031DC = {
 						CreatedOnToolsVersion = 7.3;
-					};
-					3987C8FF1CD9613B004031DC = {
-						CreatedOnToolsVersion = 7.3;
-						TestTargetID = 3987C8EC1CD9613B004031DC;
 					};
 				};
 			};
@@ -223,7 +181,6 @@
 			projectRoot = "";
 			targets = (
 				3987C8EC1CD9613B004031DC /* CamCapture */,
-				3987C8FF1CD9613B004031DC /* CamCaptureTests */,
 			);
 		};
 /* End PBXProject section */
@@ -236,13 +193,6 @@
 				3987C8F71CD9613B004031DC /* Assets.xcassets in Resources */,
 				3987C8FA1CD9613B004031DC /* MainMenu.xib in Resources */,
 				39A523291CEA86A300990789 /* template.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3987C8FE1CD9613B004031DC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,23 +213,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3987C8FC1CD9613B004031DC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3987C9051CD9613B004031DC /* CamCaptureTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		3987C9021CD9613B004031DC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3987C8EC1CD9613B004031DC /* CamCapture */;
-			targetProxy = 3987C9011CD9613B004031DC /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3987C8F81CD9613B004031DC /* MainMenu.xib */ = {
@@ -400,32 +334,6 @@
 			};
 			name = Release;
 		};
-		3987C9181CD9613B004031DC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = CamCaptureTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "de.matthias-krauss.CamCaptureTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CamCapture.app/Contents/MacOS/CamCapture";
-			};
-			name = Debug;
-		};
-		3987C9191CD9613B004031DC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = CamCaptureTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "de.matthias-krauss.CamCaptureTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CamCapture.app/Contents/MacOS/CamCapture";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -443,15 +351,6 @@
 			buildConfigurations = (
 				3987C9151CD9613B004031DC /* Debug */,
 				3987C9161CD9613B004031DC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3987C9171CD9613B004031DC /* Build configuration list for PBXNativeTarget "CamCaptureTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3987C9181CD9613B004031DC /* Debug */,
-				3987C9191CD9613B004031DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
