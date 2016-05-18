@@ -12,18 +12,17 @@
 		3987C8F71CD9613B004031DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3987C8F61CD9613B004031DC /* Assets.xcassets */; };
 		3987C8FA1CD9613B004031DC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987C8F81CD9613B004031DC /* MainMenu.xib */; };
 		3987C9051CD9613B004031DC /* CamCaptureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987C9041CD9613B004031DC /* CamCaptureTests.m */; };
-		3987C9101CD9613B004031DC /* CamCaptureUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987C90F1CD9613B004031DC /* CamCaptureUITests.m */; };
+		3987C9211CD9621E004031DC /* CameraGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987C9201CD9621E004031DC /* CameraGrabber.m */; };
+		3987C9231CD96425004031DC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3987C9221CD96425004031DC /* AVFoundation.framework */; };
+		39A5231D1CE8BB0600990789 /* MarkerDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A5231C1CE8BB0600990789 /* MarkerDetector.m */; };
+		39A523221CE9034800990789 /* SimplePollockBehaviour.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A523211CE9034800990789 /* SimplePollockBehaviour.m */; };
+		39A523271CEA37A400990789 /* FakeMarkerDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A523261CEA37A400990789 /* FakeMarkerDetector.m */; };
+		39A523291CEA86A300990789 /* template.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A523281CEA86A300990789 /* template.png */; };
+		39B06D8A1CECA41F003AD76E /* ValveCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B06D891CECA41F003AD76E /* ValveCommunicator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		3987C9011CD9613B004031DC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3987C8E51CD9613B004031DC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3987C8EC1CD9613B004031DC;
-			remoteInfo = CamCapture;
-		};
-		3987C90C1CD9613B004031DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3987C8E51CD9613B004031DC /* Project object */;
 			proxyType = 1;
@@ -43,9 +42,23 @@
 		3987C9001CD9613B004031DC /* CamCaptureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CamCaptureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3987C9041CD9613B004031DC /* CamCaptureTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CamCaptureTests.m; sourceTree = "<group>"; };
 		3987C9061CD9613B004031DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3987C90B1CD9613B004031DC /* CamCaptureUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CamCaptureUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3987C90F1CD9613B004031DC /* CamCaptureUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CamCaptureUITests.m; sourceTree = "<group>"; };
 		3987C9111CD9613B004031DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3987C91F1CD9621E004031DC /* CameraGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraGrabber.h; sourceTree = "<group>"; };
+		3987C9201CD9621E004031DC /* CameraGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraGrabber.m; sourceTree = "<group>"; };
+		3987C9221CD96425004031DC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		39A5231B1CE8BB0600990789 /* MarkerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerDetector.h; sourceTree = "<group>"; };
+		39A5231C1CE8BB0600990789 /* MarkerDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerDetector.m; sourceTree = "<group>"; };
+		39A5231E1CE8BEA300990789 /* PollockBehaviour.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PollockBehaviour.h; sourceTree = "<group>"; };
+		39A5231F1CE8C3FC00990789 /* Settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
+		39A523201CE9034800990789 /* SimplePollockBehaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePollockBehaviour.h; sourceTree = "<group>"; };
+		39A523211CE9034800990789 /* SimplePollockBehaviour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePollockBehaviour.m; sourceTree = "<group>"; };
+		39A523231CEA2FD700990789 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		39A523251CEA37A400990789 /* FakeMarkerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMarkerDetector.h; sourceTree = "<group>"; };
+		39A523261CEA37A400990789 /* FakeMarkerDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMarkerDetector.m; sourceTree = "<group>"; };
+		39A523281CEA86A300990789 /* template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = template.png; sourceTree = "<group>"; };
+		39B06D881CECA41F003AD76E /* ValveCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValveCommunicator.h; sourceTree = "<group>"; };
+		39B06D891CECA41F003AD76E /* ValveCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValveCommunicator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,17 +66,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3987C9231CD96425004031DC /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3987C8FD1CD9613B004031DC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3987C9081CD9613B004031DC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -76,6 +83,8 @@
 		3987C8E41CD9613B004031DC = {
 			isa = PBXGroup;
 			children = (
+				39A523231CEA2FD700990789 /* Accelerate.framework */,
+				3987C9221CD96425004031DC /* AVFoundation.framework */,
 				3987C8EF1CD9613B004031DC /* CamCapture */,
 				3987C9031CD9613B004031DC /* CamCaptureTests */,
 				3987C90E1CD9613B004031DC /* CamCaptureUITests */,
@@ -88,7 +97,6 @@
 			children = (
 				3987C8ED1CD9613B004031DC /* CamCapture.app */,
 				3987C9001CD9613B004031DC /* CamCaptureTests.xctest */,
-				3987C90B1CD9613B004031DC /* CamCaptureUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,9 +104,22 @@
 		3987C8EF1CD9613B004031DC /* CamCapture */ = {
 			isa = PBXGroup;
 			children = (
+				39A5231F1CE8C3FC00990789 /* Settings.h */,
 				3987C8F01CD9613B004031DC /* AppDelegate.h */,
 				3987C8F11CD9613B004031DC /* AppDelegate.m */,
+				39A5231E1CE8BEA300990789 /* PollockBehaviour.h */,
+				39A523201CE9034800990789 /* SimplePollockBehaviour.h */,
+				39A523211CE9034800990789 /* SimplePollockBehaviour.m */,
+				3987C91F1CD9621E004031DC /* CameraGrabber.h */,
+				3987C9201CD9621E004031DC /* CameraGrabber.m */,
+				39A523251CEA37A400990789 /* FakeMarkerDetector.h */,
+				39A523261CEA37A400990789 /* FakeMarkerDetector.m */,
+				39A5231B1CE8BB0600990789 /* MarkerDetector.h */,
+				39A5231C1CE8BB0600990789 /* MarkerDetector.m */,
+				39B06D881CECA41F003AD76E /* ValveCommunicator.h */,
+				39B06D891CECA41F003AD76E /* ValveCommunicator.m */,
 				3987C8F61CD9613B004031DC /* Assets.xcassets */,
+				39A523281CEA86A300990789 /* template.png */,
 				3987C8F81CD9613B004031DC /* MainMenu.xib */,
 				3987C8FB1CD9613B004031DC /* Info.plist */,
 				3987C8F31CD9613B004031DC /* Supporting Files */,
@@ -170,24 +191,6 @@
 			productReference = 3987C9001CD9613B004031DC /* CamCaptureTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3987C90A1CD9613B004031DC /* CamCaptureUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3987C91A1CD9613B004031DC /* Build configuration list for PBXNativeTarget "CamCaptureUITests" */;
-			buildPhases = (
-				3987C9071CD9613B004031DC /* Sources */,
-				3987C9081CD9613B004031DC /* Frameworks */,
-				3987C9091CD9613B004031DC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3987C90D1CD9613B004031DC /* PBXTargetDependency */,
-			);
-			name = CamCaptureUITests;
-			productName = CamCaptureUITests;
-			productReference = 3987C90B1CD9613B004031DC /* CamCaptureUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -201,10 +204,6 @@
 						CreatedOnToolsVersion = 7.3;
 					};
 					3987C8FF1CD9613B004031DC = {
-						CreatedOnToolsVersion = 7.3;
-						TestTargetID = 3987C8EC1CD9613B004031DC;
-					};
-					3987C90A1CD9613B004031DC = {
 						CreatedOnToolsVersion = 7.3;
 						TestTargetID = 3987C8EC1CD9613B004031DC;
 					};
@@ -225,7 +224,6 @@
 			targets = (
 				3987C8EC1CD9613B004031DC /* CamCapture */,
 				3987C8FF1CD9613B004031DC /* CamCaptureTests */,
-				3987C90A1CD9613B004031DC /* CamCaptureUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -237,17 +235,11 @@
 			files = (
 				3987C8F71CD9613B004031DC /* Assets.xcassets in Resources */,
 				3987C8FA1CD9613B004031DC /* MainMenu.xib in Resources */,
+				39A523291CEA86A300990789 /* template.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3987C8FE1CD9613B004031DC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3987C9091CD9613B004031DC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -261,8 +253,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39A523271CEA37A400990789 /* FakeMarkerDetector.m in Sources */,
 				3987C8F51CD9613B004031DC /* main.m in Sources */,
+				39A523221CE9034800990789 /* SimplePollockBehaviour.m in Sources */,
+				39B06D8A1CECA41F003AD76E /* ValveCommunicator.m in Sources */,
+				3987C9211CD9621E004031DC /* CameraGrabber.m in Sources */,
 				3987C8F21CD9613B004031DC /* AppDelegate.m in Sources */,
+				39A5231D1CE8BB0600990789 /* MarkerDetector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,14 +271,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3987C9071CD9613B004031DC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3987C9101CD9613B004031DC /* CamCaptureUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -289,11 +278,6 @@
 			isa = PBXTargetDependency;
 			target = 3987C8EC1CD9613B004031DC /* CamCapture */;
 			targetProxy = 3987C9011CD9613B004031DC /* PBXContainerItemProxy */;
-		};
-		3987C90D1CD9613B004031DC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3987C8EC1CD9613B004031DC /* CamCapture */;
-			targetProxy = 3987C90C1CD9613B004031DC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -397,6 +381,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = CamCapture/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.matthias-krauss.CamCapture";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -409,6 +394,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = CamCapture/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.matthias-krauss.CamCapture";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -440,30 +426,6 @@
 			};
 			name = Release;
 		};
-		3987C91B1CD9613B004031DC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = CamCaptureUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "de.matthias-krauss.CamCaptureUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = CamCapture;
-			};
-			name = Debug;
-		};
-		3987C91C1CD9613B004031DC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = CamCaptureUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "de.matthias-krauss.CamCaptureUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = CamCapture;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -483,6 +445,7 @@
 				3987C9161CD9613B004031DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3987C9171CD9613B004031DC /* Build configuration list for PBXNativeTarget "CamCaptureTests" */ = {
 			isa = XCConfigurationList;
@@ -491,14 +454,7 @@
 				3987C9191CD9613B004031DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-		};
-		3987C91A1CD9613B004031DC /* Build configuration list for PBXNativeTarget "CamCaptureUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3987C91B1CD9613B004031DC /* Debug */,
-				3987C91C1CD9613B004031DC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
