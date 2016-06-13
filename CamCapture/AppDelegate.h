@@ -10,7 +10,7 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-@property (assign) BOOL fakeTracking;
+@property (assign, nonatomic) BOOL fakeTracking;
 
 @end
 
