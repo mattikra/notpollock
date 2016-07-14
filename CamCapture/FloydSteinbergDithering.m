@@ -10,6 +10,12 @@
 
 @interface FloydSteinbergDithering(private)
 
+@property (assign) int width;
+@property (assign) int height;
+@property (strong) NSMutableData* matrixData;
+- (float) matrixValueAtX:(unsigned int)x y:(unsigned int)y;
+- (void) setMatrixValueAtX:(unsigned int)x y:(unsigned int)y to:(float)val;
+
 @end
 
 @implementation FloydSteinbergDithering {
@@ -19,6 +25,11 @@
 
 -(instancetype)initWithWidth:(int)width Height:(int)height {
   if([super initWithWidth:width Height:height]) {
+    
+    self.matrixData = [NSMutableData dataWithLength:sizeof(float)*width*height];
+    self.width = width;
+    self.height = height;
+    
     _matrix = [NSMutableArray arrayWithCapacity:width];
     
     for(int x = 0; x < width; x++) {
@@ -172,5 +183,22 @@
 //  
 //  return retVal;
 //}
+
+
+- (float) matrixValueAtX:(unsigned int)x y:(unsigned int)y {
+  if ((x >= self.width) || (y >= self.height)) {
+    return 0.0f;
+  }
+  float* base = (float*)(self.matrixData.mutableBytes);
+  return base[y*self.width+x];
+}
+
+- (void) setMatrixValueAtX:(unsigned int)x y:(unsigned int)y to:(float)val {
+  if ((x < self.width) && (y < self.height)) {
+    float* base = (float*)(self.matrixData.mutableBytes);
+    base[y*self.width+x] = val;
+  }
+}
+
 
 @end
