@@ -17,6 +17,7 @@
 @property (assign) int width;
 @property (assign) int height;
 @property (assign) float stepsize;
+@property (assign) float coordMove;
 
 @property (strong) NSMutableData* matrixData;
 
@@ -42,6 +43,12 @@
     self.height = DITHER_MATRIX_HEIGHT;
     self.matrixData = [NSMutableData dataWithLength:sizeof(float) * self.width * self.height];
     self.stepsize = (ABS(DITHER_GRID_MAX_VALUE) + ABS(DITHER_GRID_MIN_VALUE)) / ABS(MAX(DITHER_MATRIX_WIDTH, DITHER_MATRIX_HEIGHT));  // calculate the step size for our matrix
+    float max_val = MAX(ABS(DITHER_GRID_MIN_VALUE), ABS(DITHER_GRID_MAX_VALUE));
+    self.coordMove = 0;
+    self.coordMove = ABS(max_val);
+    
+    NSLog(@"matrix: %d x %d, step size: %f, coord move: %f", self.width, self.height, self.stepsize, self.coordMove);
+
     
     self.behaviour = [[BEHAVIOUR_CLASS alloc] initWithTemplateURL:url];
     self.behaviour.idleHeight = CAN_HEIGHT;
@@ -69,32 +76,97 @@
   int xImg = [self getMatrixPositionFor:point.x];
   int yImg = [self getMatrixPositionFor:point.y];
   
-  NSLog(@"%f x %f -> %d x %d", point.x, point.y, xImg, yImg);
+//  NSLog(@"%f x %f -> %d x %d", point.x + 1, point.y + 1, xImg, yImg);
   
   float origVal = [self matrixValueAtX:xImg y:yImg];
   
-  float val = [self quadricEase:origVal
-                           peak:DITHER_PEAK
-                   stdDeviation:DITHER_STD_DEVIATION];
-  
-  if(origVal > 0) {
-    NSLog(@"point(%d, %d): orig: %f new: %f", xImg, yImg, origVal, val);
-  }
-
-  [self setMatrixValueAtX:xImg y:yImg to:origVal+val];
-  
-  if(val > DITHER_MAX_TRESHOLD) {
+  if(origVal > DITHER_MAX_TRESHOLD) {
     retVal = false;
   } else {
+    
+    float newVal = origVal + DITHER_VALUE_ADD;
+    [self setMatrixValueAtX:xImg y:yImg to:newVal];
+    
+    // calculate neigbours
+    for(int x = 1; x <= 2; x++) {
+      float addFieldValue = [self ease:self.stepsize * x];
+      
+      switch (x) {
+        case 1:
+          [self addValueToXPlusOne:addFieldValue x:xImg y:yImg];
+          break;
+        case 2:
+          [self addValueToXPlusTwo:addFieldValue x:xImg y:yImg];
+          break;
+        default:
+          break;
+      }
+    }
+    
+    
+    if(newVal > 0) {
+      NSLog(@"point(%d, %d): orig: %f new: %f", xImg, yImg, origVal, newVal);
+    }
+    
     retVal = true;
   }
   
   return retVal;
 }
 
--(float) quadricEase:(float)value peak:(float)peak  stdDeviation:(float)stdDev{
-  return( 1.0 / (sqrt(2 * M_PI) * stdDev) *
-         exp(-(value - peak) * (value - peak) / (2 * stdDev * stdDev)));
+-(void) addValueToXPlusOne:(float)val x:(int)x y:(int)y {
+  
+  // (-1/0)
+  if(x-1 >= 0) {
+    float newVal = [self matrixValueAtX:x-1 y:y] + val;
+    [self setMatrixValueAtX:x-1 y:y to:newVal];
+  }
+  
+  // (-1/-1)
+  if(x-1 >= 0 && y-1 >= 0) {
+    float newVal = [self matrixValueAtX:x-1 y:y-1] + val;
+    [self setMatrixValueAtX:x-1 y:y-1 to:newVal];
+  }
+  
+  // (-1/1)
+  if(x-1 >= 0 && y+1 <= MAX(ABS(DITHER_GRID_MIN_VALUE), ABS(DITHER_GRID_MAX_VALUE))) {
+    float newVal = [self matrixValueAtX:x-1 y:y+1] + val;
+    [self setMatrixValueAtX:x-1 y:y+1 to:newVal];
+  }
+  
+  // (0/1)
+  if(y+1 <= MAX(ABS(DITHER_GRID_MIN_VALUE), ABS(DITHER_GRID_MAX_VALUE))) {
+    float newVal = [self matrixValueAtX:x y:y+1] + val;
+    [self setMatrixValueAtX:x y:y+1 to:newVal];
+  }
+  
+  // (0/-1)
+  if(y-1 >= 0) {
+    float newVal = [self matrixValueAtX:x y:y-1] + val;
+    [self setMatrixValueAtX:x y:y-1 to:newVal];
+  }
+  
+  // (1/1)
+  // (1/0)
+  // (1/-1)
+  
+  
+  
+}
+
+-(void) addValueToXPlusTwo:(float)val x:(int)x y:(int)y{
+}
+
+-(float) ease:(float)stepSum{
+//  return( 1.0 / (sqrt(2 * M_PI) * stdDev) *
+//         exp(-(value - peak) * (value - peak) / (2 * stdDev * stdDev)));
+  
+//  e^(-(x/.006)^2)/33.3
+  
+  // .006 -> stepsize * 3
+  //  33.3 -> shring y to 33%
+  
+  return expf(-powf(2, (stepSum/(self.stepsize*3))))/33.3f;
 }
 
 
@@ -105,7 +177,7 @@
 }
 
 - (int) getMatrixPositionFor:(float) val {
-  int ret = val / self.stepsize;
+  int ret = (val + self.coordMove) / self.stepsize;
   return ret;
 }
 
