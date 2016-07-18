@@ -25,8 +25,8 @@
 
 /* DITHERING */
 
-#define DITHER_MATRIX_HEIGHT 100   /* Dithering Matrix height */
-#define DITHER_MATRIX_WIDTH 100    /* Dithering Matrix height */
+#define DITHER_MATRIX_HEIGHT 300   /* Dithering Matrix height */
+#define DITHER_MATRIX_WIDTH 300    /* Dithering Matrix height */
 #define DITHER_GRID_MAX_VALUE 1.0   /* Max value to build the grid */
 #define DITHER_GRID_MIN_VALUE -1.0  /* Min value to build the grid */
 

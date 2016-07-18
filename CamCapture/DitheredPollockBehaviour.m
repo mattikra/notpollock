@@ -18,6 +18,7 @@
 @property (assign) int height;
 @property (assign) float stepsize;
 @property (assign) float coordMove;
+@property (assign) float showArray;
 
 @property (strong) NSMutableData* matrixData;
 
@@ -33,11 +34,14 @@
 @synthesize idleHeight;    //height above canvas in m when pendulum is idle
 @synthesize releaseDelay;  //drop release latency in s
 @synthesize templateScale; //arbitrary scale factor (0..1) - use full tracking range for 1
+@synthesize showArray;
 
 /* initialize with a given template image URL */
 - (id) initWithTemplateURL:(NSURL*)url {
   self = [super init];
   if (self) {
+    
+    self.showArray = true;
     
     self.width = DITHER_MATRIX_WIDTH;
     self.height = DITHER_MATRIX_HEIGHT;
@@ -104,9 +108,9 @@
     }
     
     
-    if(newVal > 0) {
-      NSLog(@"point(%d, %d): orig: %f new: %f", xImg, yImg, origVal, newVal);
-    }
+//    if(newVal > 0) {
+//      NSLog(@"point(%d, %d): orig: %f new: %f", xImg, yImg, origVal, newVal);
+//    }
     
     retVal = true;
   }
@@ -196,15 +200,29 @@
 }
 
 -(float) ease:(float)stepSum{
-//  return( 1.0 / (sqrt(2 * M_PI) * stdDev) *
-//         exp(-(value - peak) * (value - peak) / (2 * stdDev * stdDev)));
-  
-//  e^(-(x/.006)^2)/33.3
-  
-  // .006 -> stepsize * 3
-  //  33.3 -> shring y to 33%
-  
+  //  e^(-(x/.006)^2)/33.3
   return expf(-powf(2, (stepSum/(self.stepsize*3))))/33.3f;
+}
+
+-(void) drawMatrixInRect:(NSRect) rect {
+  
+  float minCells = MIN(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT));
+  float maxCells = MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT));
+  float minSide = MIN(rect.size.width, rect.size.height);
+  float maxSide = MAX(rect.size.width, rect.size.height);
+  
+  float cellWidth = maxSide / maxCells;
+  float cellHeight = minSide / minCells;
+  
+  for(int x = 0; x < maxCells; x++) {
+    for(int y = 0; y < minCells; y++) {
+      float val = [self matrixValueAtX:x y:y];
+      if(val > 0) {
+        [[NSColor colorWithRed:1.0 green:0 blue:0 alpha:val] set];
+        NSRectFill(NSMakeRect(cellWidth * x,cellHeight * y, cellWidth, cellHeight));
+      }
+    }
+  }
 }
 
 
@@ -212,6 +230,8 @@
 /* optional method to show current state */
 - (void) visualizeInRect:(NSRect)rect {
   [self.behaviour visualizeInRect:rect];
+  if(self.showArray)
+    [self drawMatrixInRect: rect];
 }
 
 - (int) getMatrixPositionFor:(float) val {
