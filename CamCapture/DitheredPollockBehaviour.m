@@ -129,13 +129,13 @@
   }
   
   // (-1/1)
-  if(x-1 >= 0 && y+1 <= MAX(ABS(DITHER_GRID_MIN_VALUE), ABS(DITHER_GRID_MAX_VALUE))) {
+  if(x-1 >= 0 && y+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
     float newVal = [self matrixValueAtX:x-1 y:y+1] + val;
     [self setMatrixValueAtX:x-1 y:y+1 to:newVal];
   }
   
   // (0/1)
-  if(y+1 <= MAX(ABS(DITHER_GRID_MIN_VALUE), ABS(DITHER_GRID_MAX_VALUE))) {
+  if(y+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
     float newVal = [self matrixValueAtX:x y:y+1] + val;
     [self setMatrixValueAtX:x y:y+1 to:newVal];
   }
@@ -147,14 +147,52 @@
   }
   
   // (1/1)
+  if(x+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))
+     && y+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
+    float newVal = [self matrixValueAtX:x+1 y:y+1] + val;
+    [self setMatrixValueAtX:x+1 y:y+1 to:newVal];
+  }
+  
   // (1/0)
+  if(x+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
+    float newVal = [self matrixValueAtX:x+1 y:y] + val;
+    [self setMatrixValueAtX:x+1 y:y to:newVal];
+  }
+  
   // (1/-1)
-  
-  
+  if(x+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT)) && y-1 >= 0) {
+    float newVal = [self matrixValueAtX:x+1 y:y-1] + val;
+    [self setMatrixValueAtX:x+1 y:y-1 to:newVal];
+  }
   
 }
 
 -(void) addValueToXPlusTwo:(float)val x:(int)x y:(int)y{
+  
+  // (-2/0)
+  if(x-2 >= 0) {
+    float newVal = [self matrixValueAtX:x-2 y:y] + val;
+    [self setMatrixValueAtX:x-2 y:y to:newVal];
+  }
+  
+  // (0/2)
+  if(y+2 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
+    float newVal = [self matrixValueAtX:x y:y+2] + val;
+    [self setMatrixValueAtX:x y:y+2 to:newVal];
+  }
+  
+  // (0/-2)
+  if(y-2 >= 0) {
+    float newVal = [self matrixValueAtX:x y:y-2] + val;
+    [self setMatrixValueAtX:x y:y-2 to:newVal];
+  }
+  
+  // (2/0)
+  if(x+2 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
+    float newVal = [self matrixValueAtX:x+2 y:y] + val;
+    [self setMatrixValueAtX:x+2 y:y to:newVal];
+  }
+  
 }
 
 -(float) ease:(float)stepSum{
