@@ -63,8 +63,8 @@
 }
 
 /* determine whether the valve should be open or not based on most recent tracking information */
-- (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time {
-  BOOL open = [self.behaviour shouldOpenWithTrackResult:tracked position:position at:time];
+- (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time canOpen:(BOOL)canOpen {
+  BOOL open = [self.behaviour shouldOpenWithTrackResult:tracked position:position at:time canOpen:canOpen];
   
   if(open) {
     open = [self shouldOpenForPos:position];

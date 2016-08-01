@@ -11,8 +11,6 @@
 
 @implementation DitheringBaseGrid
 
-@synthesize width, height;
-
 -(instancetype)initWithWidth:(int) width Height:(int)height {
   if(self = [super init]) {
     self.width = width;

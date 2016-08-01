@@ -23,6 +23,8 @@
 #define VALVE_LATENCY 0.15   /* valve release latency (e.g. BLE / physical) */
 #define TEMPLATE_SCALE 0.5   /* target scale */
 
+#define DROP_DEAD_TIME_S 0.5 /* dead time after each drop */
+
 /* DITHERING */
 
 #define DITHER_MATRIX_HEIGHT 300   /* Dithering Matrix height */

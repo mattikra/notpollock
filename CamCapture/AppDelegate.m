@@ -28,6 +28,8 @@
 @property (strong) FakeMarkerDetector* fakeMarkerDetector;
 @property (strong) DITHER_CLASS* behaviour;
 
+@property (assign) NSTimeInterval lastDrop;
+
 //@property (strong) DitheringBaseGrid *ditheringGrid;
 
 @end
@@ -51,6 +53,7 @@
     self.behaviour.templateScale = TEMPLATE_SCALE;
     self.behaviour.releaseDelay = VALVE_LATENCY;
     self.fakeTracking = NO;
+    self.lastDrop = 0.0;
   
 }
 
@@ -79,15 +82,25 @@
     } else {
         detected = [self.markerDetector detectMarkerInFrame:frame outPosition:&pos];
     }
-    
+
+    NSTimeInterval now = [[NSDate date] timeIntervalSinceReferenceDate];
+    BOOL canOpen = (now - self.lastDrop > DROP_DEAD_TIME_S);
+
     BOOL open = [self.behaviour shouldOpenWithTrackResult:detected
                                                  position:pos
-                                                       at:timestamp];
+                                                       at:timestamp
+                                                  canOpen:canOpen];
   
-//    BOOL shouldOpen = [self.ditheringGrid shouldOpenForPos:pos]; //(open) ? [self.ditheringGrid shouldOpenForPos:pos] : false;
-  
-    self.valve.shouldBeOpen = open;
+    if (!canOpen) {
+        open = NO;
+    }
     
+    if (open) {
+        self.lastDrop = now;
+    }
+
+    self.valve.shouldBeOpen = open;
+
     //Real handling done. Now visualize.
     
     int width = (int)frame.pixelsWide;

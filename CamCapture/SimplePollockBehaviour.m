@@ -52,8 +52,8 @@
     return self;
 }
 
-- (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time {
-    
+- (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time canOpen:(BOOL)canOpen {
+
     self.wasOpen = NO;
     
     //collect last MIN_TRACK_SEQUENCE samples
@@ -131,7 +131,7 @@
     BOOL open = [color brightnessComponent] < 0.5;
     self.wasOpen = open;
     
-    return open;
+    return open && canOpen;
 }
 
 
@@ -193,7 +193,7 @@
     
     [self.template drawInRect:templateRect
                      fromRect:NSMakeRect(0,0,self.template.pixelsWide,self.template.pixelsHigh)
-                    operation:NSCompositeSourceOver
+                    operation:NSCompositeMultiply
                      fraction:0.5
                respectFlipped:YES
                         hints:NULL];
