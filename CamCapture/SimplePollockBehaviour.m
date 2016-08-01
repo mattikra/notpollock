@@ -123,8 +123,10 @@
     self.lastProjectionPoint = projectionPoint;
 
     //look up in template bitmap
-    int lookX = (int)(((projectionPoint.x * self.templateScale) / 2.0 + 0.5) * self.template.pixelsWide);
-    int lookY = (int)(((projectionPoint.y * self.templateScale) / 2.0 + 0.5) * self.template.pixelsHigh);
+    int lookX = (int)(((projectionPoint.x / self.templateScale) / 2.0 + 0.5) * self.template.pixelsWide);
+    int lookY = (int)(((projectionPoint.y / self.templateScale) / 2.0 + 0.5) * self.template.pixelsHigh);
+    NSLog(@"mapping %f %f to %i %i",projectionPoint.x, projectionPoint.y, lookX, lookY);
+    
     NSColor* color = [self.template colorAtX:lookX y:lookY];
     BOOL open = [color brightnessComponent] < 0.5;
     self.wasOpen = open;
@@ -179,6 +181,24 @@
     double width = rect.size.width;
     double height = rect.size.height;
     double scale = MAX(width, height) / 2.0;
+
+    NSPoint center = NSMakePoint(NSMidX(rect), NSMidY(rect));
+    double tSize = MAX(rect.size.width*templateScale, rect.size.height*templateScale);
+    NSSize templateSize = NSMakeSize(tSize, tSize);
+    
+    NSRect templateRect = NSMakeRect(center.x-0.5 * templateSize.width,
+                                     center.y-0.5 * templateSize.height,
+                                     templateSize.width,
+                                     templateSize.height);
+    
+    [self.template drawInRect:templateRect
+                     fromRect:NSMakeRect(0,0,self.template.pixelsWide,self.template.pixelsHigh)
+                    operation:NSCompositeSourceOver
+                     fraction:0.5
+               respectFlipped:YES
+                        hints:NULL];
+
+    [self.template drawInRect:templateRect];
 
     NSBezierPath* path = [NSBezierPath bezierPath];
     NSArray* dates = [self.lastTrackPoints.allKeys sortedArrayUsingSelector:@selector(compare:)];
