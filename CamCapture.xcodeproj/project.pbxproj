@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3913BB1B1D4EA79A00313431 /* MultipointMarkerDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3913BB1A1D4EA79A00313431 /* MultipointMarkerDetector.m */; };
 		3987C8F21CD9613B004031DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987C8F11CD9613B004031DC /* AppDelegate.m */; };
 		3987C8F51CD9613B004031DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987C8F41CD9613B004031DC /* main.m */; };
 		3987C8F71CD9613B004031DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3987C8F61CD9613B004031DC /* Assets.xcassets */; };
 		3987C8FA1CD9613B004031DC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987C8F81CD9613B004031DC /* MainMenu.xib */; };
 		3987C9211CD9621E004031DC /* CameraGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 3987C9201CD9621E004031DC /* CameraGrabber.m */; };
 		3987C9231CD96425004031DC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3987C9221CD96425004031DC /* AVFoundation.framework */; };
-		39A5231D1CE8BB0600990789 /* MarkerDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A5231C1CE8BB0600990789 /* MarkerDetector.m */; };
+		39A5231D1CE8BB0600990789 /* SimpleMarkerDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A5231C1CE8BB0600990789 /* SimpleMarkerDetector.m */; };
 		39A523221CE9034800990789 /* SimplePollockBehaviour.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A523211CE9034800990789 /* SimplePollockBehaviour.m */; };
 		39A523271CEA37A400990789 /* FakeMarkerDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A523261CEA37A400990789 /* FakeMarkerDetector.m */; };
 		39A523291CEA86A300990789 /* template.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A523281CEA86A300990789 /* template.png */; };
@@ -21,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3913BB191D4EA79A00313431 /* MultipointMarkerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipointMarkerDetector.h; sourceTree = "<group>"; };
+		3913BB1A1D4EA79A00313431 /* MultipointMarkerDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipointMarkerDetector.m; sourceTree = "<group>"; };
+		3913BB1C1D4F2E0D00313431 /* MarkerDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarkerDetector.h; sourceTree = "<group>"; };
 		3987C8ED1CD9613B004031DC /* CamCapture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CamCapture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3987C8F01CD9613B004031DC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3987C8F11CD9613B004031DC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -35,8 +39,8 @@
 		3987C91F1CD9621E004031DC /* CameraGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraGrabber.h; sourceTree = "<group>"; };
 		3987C9201CD9621E004031DC /* CameraGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraGrabber.m; sourceTree = "<group>"; };
 		3987C9221CD96425004031DC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		39A5231B1CE8BB0600990789 /* MarkerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerDetector.h; sourceTree = "<group>"; };
-		39A5231C1CE8BB0600990789 /* MarkerDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerDetector.m; sourceTree = "<group>"; };
+		39A5231B1CE8BB0600990789 /* SimpleMarkerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMarkerDetector.h; sourceTree = "<group>"; };
+		39A5231C1CE8BB0600990789 /* SimpleMarkerDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleMarkerDetector.m; sourceTree = "<group>"; };
 		39A5231E1CE8BEA300990789 /* PollockBehaviour.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PollockBehaviour.h; sourceTree = "<group>"; };
 		39A5231F1CE8C3FC00990789 /* Settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		39A523201CE9034800990789 /* SimplePollockBehaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePollockBehaviour.h; sourceTree = "<group>"; };
@@ -92,10 +96,13 @@
 				39A523211CE9034800990789 /* SimplePollockBehaviour.m */,
 				3987C91F1CD9621E004031DC /* CameraGrabber.h */,
 				3987C9201CD9621E004031DC /* CameraGrabber.m */,
+				3913BB1C1D4F2E0D00313431 /* MarkerDetector.h */,
 				39A523251CEA37A400990789 /* FakeMarkerDetector.h */,
 				39A523261CEA37A400990789 /* FakeMarkerDetector.m */,
-				39A5231B1CE8BB0600990789 /* MarkerDetector.h */,
-				39A5231C1CE8BB0600990789 /* MarkerDetector.m */,
+				39A5231B1CE8BB0600990789 /* SimpleMarkerDetector.h */,
+				39A5231C1CE8BB0600990789 /* SimpleMarkerDetector.m */,
+				3913BB191D4EA79A00313431 /* MultipointMarkerDetector.h */,
+				3913BB1A1D4EA79A00313431 /* MultipointMarkerDetector.m */,
 				39B06D881CECA41F003AD76E /* ValveCommunicator.h */,
 				39B06D891CECA41F003AD76E /* ValveCommunicator.m */,
 				3987C8F61CD9613B004031DC /* Assets.xcassets */,
@@ -209,7 +216,8 @@
 				39B06D8A1CECA41F003AD76E /* ValveCommunicator.m in Sources */,
 				3987C9211CD9621E004031DC /* CameraGrabber.m in Sources */,
 				3987C8F21CD9613B004031DC /* AppDelegate.m in Sources */,
-				39A5231D1CE8BB0600990789 /* MarkerDetector.m in Sources */,
+				3913BB1B1D4EA79A00313431 /* MultipointMarkerDetector.m in Sources */,
+				39A5231D1CE8BB0600990789 /* SimpleMarkerDetector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

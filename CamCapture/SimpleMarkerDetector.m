@@ -6,10 +6,10 @@
 //  Copyright © 2016 Matthias Krauß. All rights reserved.
 //
 
-#import "MarkerDetector.h"
+#import "SimpleMarkerDetector.h"
 #import "Settings.h"
 
-@implementation MarkerDetector
+@implementation SimpleMarkerDetector
 
 - (BOOL) detectMarkerInFrame:(NSBitmapImageRep*)frame outPosition:(NSPoint*)pt {
     const uint8_t* irBase = [frame bitmapData];

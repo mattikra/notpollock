@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "CameraGrabber.h"
 #import "MarkerDetector.h"
+#import "MultipointMarkerDetector.h"
 #import "FakeMarkerDetector.h"
 #import "PollockBehaviour.h"
 #import "ValveCommunicator.h"
@@ -22,8 +23,8 @@
 
 @property (strong) CameraGrabber* grabber;
 @property (strong) ValveCommunicator* valve;
-@property (strong) MarkerDetector* markerDetector;
-@property (strong) FakeMarkerDetector* fakeMarkerDetector;
+@property (strong) id<MarkerDetector> markerDetector;
+@property (strong) id<MarkerDetector> fakeMarkerDetector;
 @property (strong) BEHAVIOUR_CLASS* behaviour;
 
 @end
@@ -34,7 +35,7 @@
     self.grabber = [CameraGrabber new];
     self.valve = [ValveCommunicator new];
     self.grabber.delegate = self;
-    self.markerDetector = [MarkerDetector new];
+    self.markerDetector = [MultipointMarkerDetector new];
     self.fakeMarkerDetector = [FakeMarkerDetector new];
     NSURL* templateURL = [[NSBundle mainBundle] URLForImageResource:@"template"];
     self.behaviour = [[BEHAVIOUR_CLASS alloc] initWithTemplateURL:templateURL];
@@ -42,6 +43,17 @@
     self.behaviour.templateScale = TEMPLATE_SCALE;
     self.behaviour.releaseDelay = VALVE_LATENCY;
     self.fakeTracking = NO;
+
+    //test only
+    NSString* testPath = [@"~/Desktop/multipoint.jpg" stringByExpandingTildeInPath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:testPath]) {
+        NSURL* testURL = [NSURL fileURLWithPath:testPath];
+        NSData* testData = [NSData dataWithContentsOfURL:testURL];
+        NSBitmapImageRep* testBitmap = [NSBitmapImageRep imageRepWithData:testData];
+        NSPoint testPos;
+        BOOL testDetected = [self.markerDetector detectMarkerInFrame:testBitmap outPosition:&testPos];
+        NSLog(@"test detected %i %f %f", testDetected, testPos.x, testPos.y);
+    }
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
