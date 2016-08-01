@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
     </dependencies>
@@ -663,7 +663,6 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
                 <outlet property="imageView" destination="pmc-eS-EOv" id="vDm-de-SNb"/>
-                <outlet property="templateImageView" destination="97J-Y7-JTT" id="aan-SH-5Zp"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -672,7 +671,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="173" y="238" width="480" height="537"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="537"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -774,10 +773,6 @@
                         <rect key="frame" x="17" y="17" width="446" height="379"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" id="rwU-hU-Bb5"/>
                     </imageView>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" alphaValue="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="97J-Y7-JTT">
-                        <rect key="frame" x="14" y="14" width="452" height="385"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" image="template" id="jRH-yR-Roc"/>
-                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Hba-Tb-lqw" secondAttribute="trailing" constant="26" id="1Ov-HV-dxi"/>
@@ -789,19 +784,16 @@
                     <constraint firstItem="hiX-vU-dq4" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="Geq-vm-6Vv"/>
                     <constraint firstAttribute="trailing" secondItem="pmc-eS-EOv" secondAttribute="trailing" constant="20" id="Hcf-5T-oZm"/>
                     <constraint firstItem="FlO-0w-WTp" firstAttribute="centerY" secondItem="tbR-ok-Nr5" secondAttribute="centerY" id="I0f-DI-dVu"/>
-                    <constraint firstItem="97J-Y7-JTT" firstAttribute="top" secondItem="aUo-HV-ivi" secondAttribute="bottom" constant="8" id="LhL-Cw-Rdo"/>
                     <constraint firstItem="Hba-Tb-lqw" firstAttribute="leading" secondItem="zPb-Sh-w5B" secondAttribute="trailing" constant="8" id="MUP-EY-yuW"/>
                     <constraint firstItem="pmc-eS-EOv" firstAttribute="top" secondItem="aUo-HV-ivi" secondAttribute="bottom" constant="8" id="OLz-QG-iNd"/>
                     <constraint firstItem="hiX-vU-dq4" firstAttribute="top" secondItem="HSd-fr-ahz" secondAttribute="bottom" constant="8" id="Osc-ZW-pyN"/>
                     <constraint firstItem="TEd-Qf-q1K" firstAttribute="leading" secondItem="tbR-ok-Nr5" secondAttribute="leading" id="SID-Zy-w8n"/>
                     <constraint firstAttribute="trailing" secondItem="TEd-Qf-q1K" secondAttribute="trailing" constant="20" id="U7B-I2-Yd9"/>
                     <constraint firstItem="Hba-Tb-lqw" firstAttribute="baseline" secondItem="zPb-Sh-w5B" secondAttribute="baseline" id="Uaq-QK-Rfm"/>
-                    <constraint firstItem="97J-Y7-JTT" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="YkH-Ye-9Ys"/>
                     <constraint firstItem="HSd-fr-ahz" firstAttribute="centerY" secondItem="TEd-Qf-q1K" secondAttribute="centerY" id="Zsz-t8-gS4"/>
                     <constraint firstItem="aUo-HV-ivi" firstAttribute="top" secondItem="hiX-vU-dq4" secondAttribute="bottom" constant="8" id="a1i-RH-A2o"/>
                     <constraint firstItem="zPb-Sh-w5B" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="ceR-sc-oQD"/>
                     <constraint firstItem="HSd-fr-ahz" firstAttribute="top" secondItem="FlO-0w-WTp" secondAttribute="bottom" constant="8" id="hR3-d4-zEy"/>
-                    <constraint firstAttribute="bottom" secondItem="97J-Y7-JTT" secondAttribute="bottom" constant="20" id="hY3-ed-02V"/>
                     <constraint firstAttribute="trailing" secondItem="J65-8w-RIH" secondAttribute="trailing" constant="20" id="jgE-y2-DN7"/>
                     <constraint firstItem="J65-8w-RIH" firstAttribute="centerY" secondItem="hiX-vU-dq4" secondAttribute="centerY" id="kGT-i6-Phm"/>
                     <constraint firstItem="HSd-fr-ahz" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="oIf-vF-T1n"/>
@@ -809,7 +801,6 @@
                     <constraint firstItem="FlO-0w-WTp" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="u48-Z0-MBq"/>
                     <constraint firstAttribute="trailing" secondItem="tbR-ok-Nr5" secondAttribute="trailing" constant="20" id="xvE-Fn-MAk"/>
                     <constraint firstItem="zPb-Sh-w5B" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="yer-xQ-36u"/>
-                    <constraint firstAttribute="trailing" secondItem="97J-Y7-JTT" secondAttribute="trailing" constant="20" id="zi9-uc-2Nh"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="270" y="336.5"/>
@@ -830,7 +821,4 @@
             </connections>
         </objectController>
     </objects>
-    <resources>
-        <image name="template" width="120" height="120"/>
-    </resources>
 </document>
