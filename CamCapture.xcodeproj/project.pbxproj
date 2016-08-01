@@ -18,6 +18,9 @@
 		39A523271CEA37A400990789 /* FakeMarkerDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A523261CEA37A400990789 /* FakeMarkerDetector.m */; };
 		39A523291CEA86A300990789 /* template.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A523281CEA86A300990789 /* template.png */; };
 		39B06D8A1CECA41F003AD76E /* ValveCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B06D891CECA41F003AD76E /* ValveCommunicator.m */; };
+		47D23B101CF713AE0070FDC0 /* FloydSteinbergDithering.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D23B0F1CF713AE0070FDC0 /* FloydSteinbergDithering.m */; };
+		47D23B141CF71DE30070FDC0 /* DitheringBaseGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D23B131CF71DE30070FDC0 /* DitheringBaseGrid.m */; };
+		47F2AC251D35394D00C06CB7 /* DitheredPollockBehaviour.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2AC241D35394D00C06CB7 /* DitheredPollockBehaviour.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +50,12 @@
 		39A523281CEA86A300990789 /* template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = template.png; sourceTree = "<group>"; };
 		39B06D881CECA41F003AD76E /* ValveCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValveCommunicator.h; sourceTree = "<group>"; };
 		39B06D891CECA41F003AD76E /* ValveCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValveCommunicator.m; sourceTree = "<group>"; };
+		47D23B0F1CF713AE0070FDC0 /* FloydSteinbergDithering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloydSteinbergDithering.m; sourceTree = "<group>"; };
+		47D23B111CF713E80070FDC0 /* DitheringBaseGrid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DitheringBaseGrid.h; sourceTree = "<group>"; };
+		47D23B121CF715570070FDC0 /* FloydSteinbergDithering.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloydSteinbergDithering.h; sourceTree = "<group>"; };
+		47D23B131CF71DE30070FDC0 /* DitheringBaseGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DitheringBaseGrid.m; sourceTree = "<group>"; };
+		47F2AC231D35394D00C06CB7 /* DitheredPollockBehaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DitheredPollockBehaviour.h; sourceTree = "<group>"; };
+		47F2AC241D35394D00C06CB7 /* DitheredPollockBehaviour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DitheredPollockBehaviour.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +97,8 @@
 				3987C8F01CD9613B004031DC /* AppDelegate.h */,
 				3987C8F11CD9613B004031DC /* AppDelegate.m */,
 				39A5231E1CE8BEA300990789 /* PollockBehaviour.h */,
+				47F2AC231D35394D00C06CB7 /* DitheredPollockBehaviour.h */,
+				47F2AC241D35394D00C06CB7 /* DitheredPollockBehaviour.m */,
 				39A523201CE9034800990789 /* SimplePollockBehaviour.h */,
 				39A523211CE9034800990789 /* SimplePollockBehaviour.m */,
 				3987C91F1CD9621E004031DC /* CameraGrabber.h */,
@@ -98,6 +109,7 @@
 				39A5231C1CE8BB0600990789 /* MarkerDetector.m */,
 				39B06D881CECA41F003AD76E /* ValveCommunicator.h */,
 				39B06D891CECA41F003AD76E /* ValveCommunicator.m */,
+				47D23B151CF71E7B0070FDC0 /* Dithering */,
 				3987C8F61CD9613B004031DC /* Assets.xcassets */,
 				39A523281CEA86A300990789 /* template.png */,
 				3987C8F81CD9613B004031DC /* MainMenu.xib */,
@@ -131,6 +143,17 @@
 				3987C9111CD9613B004031DC /* Info.plist */,
 			);
 			path = CamCaptureUITests;
+			sourceTree = "<group>";
+		};
+		47D23B151CF71E7B0070FDC0 /* Dithering */ = {
+			isa = PBXGroup;
+			children = (
+				47D23B111CF713E80070FDC0 /* DitheringBaseGrid.h */,
+				47D23B131CF71DE30070FDC0 /* DitheringBaseGrid.m */,
+				47D23B121CF715570070FDC0 /* FloydSteinbergDithering.h */,
+				47D23B0F1CF713AE0070FDC0 /* FloydSteinbergDithering.m */,
+			);
+			name = Dithering;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,10 +229,13 @@
 				39A523271CEA37A400990789 /* FakeMarkerDetector.m in Sources */,
 				3987C8F51CD9613B004031DC /* main.m in Sources */,
 				39A523221CE9034800990789 /* SimplePollockBehaviour.m in Sources */,
+				47F2AC251D35394D00C06CB7 /* DitheredPollockBehaviour.m in Sources */,
 				39B06D8A1CECA41F003AD76E /* ValveCommunicator.m in Sources */,
 				3987C9211CD9621E004031DC /* CameraGrabber.m in Sources */,
+				47D23B101CF713AE0070FDC0 /* FloydSteinbergDithering.m in Sources */,
 				3987C8F21CD9613B004031DC /* AppDelegate.m in Sources */,
 				39A5231D1CE8BB0600990789 /* MarkerDetector.m in Sources */,
+				47D23B141CF71DE30070FDC0 /* DitheringBaseGrid.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
