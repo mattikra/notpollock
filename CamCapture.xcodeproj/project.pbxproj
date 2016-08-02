@@ -18,8 +18,13 @@
 		39A523271CEA37A400990789 /* FakeMarkerDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A523261CEA37A400990789 /* FakeMarkerDetector.m */; };
 		39A523291CEA86A300990789 /* template.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A523281CEA86A300990789 /* template.png */; };
 		39B06D8A1CECA41F003AD76E /* ValveCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B06D891CECA41F003AD76E /* ValveCommunicator.m */; };
+		470BE2B41D50B7AC00B1ECDA /* Slice2.png in Resources */ = {isa = PBXBuildFile; fileRef = 470BE2B31D50B7AC00B1ECDA /* Slice2.png */; };
+		470BE2B61D50BA5000B1ECDA /* Slice3.png in Resources */ = {isa = PBXBuildFile; fileRef = 470BE2B51D50BA5000B1ECDA /* Slice3.png */; };
+		470BE2B81D50C8C000B1ECDA /* Slice4.png in Resources */ = {isa = PBXBuildFile; fileRef = 470BE2B71D50C8C000B1ECDA /* Slice4.png */; };
+		470BE2BA1D50CB7C00B1ECDA /* Slice5.png in Resources */ = {isa = PBXBuildFile; fileRef = 470BE2B91D50CB7C00B1ECDA /* Slice5.png */; };
 		47D23B101CF713AE0070FDC0 /* FloydSteinbergDithering.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D23B0F1CF713AE0070FDC0 /* FloydSteinbergDithering.m */; };
 		47D23B141CF71DE30070FDC0 /* DitheringBaseGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D23B131CF71DE30070FDC0 /* DitheringBaseGrid.m */; };
+		47DB1D7C1D4FA31000E34C3D /* Slice.png in Resources */ = {isa = PBXBuildFile; fileRef = 47DB1D7B1D4FA31000E34C3D /* Slice.png */; };
 		47F2AC251D35394D00C06CB7 /* DitheredPollockBehaviour.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2AC241D35394D00C06CB7 /* DitheredPollockBehaviour.m */; };
 /* End PBXBuildFile section */
 
@@ -50,10 +55,15 @@
 		39A523281CEA86A300990789 /* template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = template.png; sourceTree = "<group>"; };
 		39B06D881CECA41F003AD76E /* ValveCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValveCommunicator.h; sourceTree = "<group>"; };
 		39B06D891CECA41F003AD76E /* ValveCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValveCommunicator.m; sourceTree = "<group>"; };
+		470BE2B31D50B7AC00B1ECDA /* Slice2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Slice2.png; sourceTree = "<group>"; };
+		470BE2B51D50BA5000B1ECDA /* Slice3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Slice3.png; sourceTree = "<group>"; };
+		470BE2B71D50C8C000B1ECDA /* Slice4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Slice4.png; sourceTree = "<group>"; };
+		470BE2B91D50CB7C00B1ECDA /* Slice5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Slice5.png; sourceTree = "<group>"; };
 		47D23B0F1CF713AE0070FDC0 /* FloydSteinbergDithering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloydSteinbergDithering.m; sourceTree = "<group>"; };
 		47D23B111CF713E80070FDC0 /* DitheringBaseGrid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DitheringBaseGrid.h; sourceTree = "<group>"; };
 		47D23B121CF715570070FDC0 /* FloydSteinbergDithering.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloydSteinbergDithering.h; sourceTree = "<group>"; };
 		47D23B131CF71DE30070FDC0 /* DitheringBaseGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DitheringBaseGrid.m; sourceTree = "<group>"; };
+		47DB1D7B1D4FA31000E34C3D /* Slice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Slice.png; sourceTree = "<group>"; };
 		47F2AC231D35394D00C06CB7 /* DitheredPollockBehaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DitheredPollockBehaviour.h; sourceTree = "<group>"; };
 		47F2AC241D35394D00C06CB7 /* DitheredPollockBehaviour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DitheredPollockBehaviour.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +121,11 @@
 				39B06D891CECA41F003AD76E /* ValveCommunicator.m */,
 				47D23B151CF71E7B0070FDC0 /* Dithering */,
 				3987C8F61CD9613B004031DC /* Assets.xcassets */,
+				47DB1D7B1D4FA31000E34C3D /* Slice.png */,
+				470BE2B31D50B7AC00B1ECDA /* Slice2.png */,
+				470BE2B51D50BA5000B1ECDA /* Slice3.png */,
+				470BE2B71D50C8C000B1ECDA /* Slice4.png */,
+				470BE2B91D50CB7C00B1ECDA /* Slice5.png */,
 				39A523281CEA86A300990789 /* template.png */,
 				3987C8F81CD9613B004031DC /* MainMenu.xib */,
 				3987C8FB1CD9613B004031DC /* Info.plist */,
@@ -214,8 +229,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3987C8F71CD9613B004031DC /* Assets.xcassets in Resources */,
+				470BE2B61D50BA5000B1ECDA /* Slice3.png in Resources */,
 				3987C8FA1CD9613B004031DC /* MainMenu.xib in Resources */,
+				470BE2B41D50B7AC00B1ECDA /* Slice2.png in Resources */,
+				470BE2B81D50C8C000B1ECDA /* Slice4.png in Resources */,
+				47DB1D7C1D4FA31000E34C3D /* Slice.png in Resources */,
 				39A523291CEA86A300990789 /* template.png in Resources */,
+				470BE2BA1D50CB7C00B1ECDA /* Slice5.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

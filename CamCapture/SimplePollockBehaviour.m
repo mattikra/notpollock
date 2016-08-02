@@ -52,7 +52,7 @@
     return self;
 }
 
-- (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time canOpen:(BOOL)canOpen {
+- (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time canOpen:(BOOL)canOpen outPos:(NSPoint *)out_projectionPoint {
 
     self.wasOpen = NO;
     
@@ -121,12 +121,13 @@
         return NO;
     }
     self.lastProjectionPoint = projectionPoint;
+    *out_projectionPoint = projectionPoint;
 
     //look up in template bitmap
     int lookX = (int)(((projectionPoint.x / self.templateScale) / 2.0 + 0.5) * self.template.pixelsWide);
     int lookY = (int)(((projectionPoint.y / self.templateScale) / 2.0 + 0.5) * self.template.pixelsHigh);
-    NSLog(@"mapping %f %f to %i %i",projectionPoint.x, projectionPoint.y, lookX, lookY);
-    
+//    NSLog(@"mapping %f %f to %i %i",projectionPoint.x, projectionPoint.y, lookX, lookY);
+  
     NSColor* color = [self.template colorAtX:lookX y:lookY];
     BOOL open = [color brightnessComponent] < 0.5;
     self.wasOpen = open;

@@ -47,7 +47,7 @@
     self.grabber.delegate = self;
     self.markerDetector = [MarkerDetector new];
     self.fakeMarkerDetector = [FakeMarkerDetector new];
-    NSURL* templateURL = [[NSBundle mainBundle] URLForImageResource:@"template"];
+    NSURL* templateURL = [[NSBundle mainBundle] URLForImageResource:@"Slice5"];
     self.behaviour = [[DITHER_CLASS alloc] initWithTemplateURL:templateURL];
     self.behaviour.idleHeight = CAN_HEIGHT;
     self.behaviour.templateScale = TEMPLATE_SCALE;
@@ -84,20 +84,20 @@
     }
 
     NSTimeInterval now = [[NSDate date] timeIntervalSinceReferenceDate];
-    BOOL canOpen = (now - self.lastDrop > DROP_DEAD_TIME_S);
-
+  BOOL canOpen = true; //(now - self.lastDrop > DROP_DEAD_TIME_S);
     BOOL open = [self.behaviour shouldOpenWithTrackResult:detected
                                                  position:pos
                                                        at:timestamp
-                                                  canOpen:canOpen];
+                                                  canOpen:canOpen
+                                                      outPos:NULL];
   
-    if (!canOpen) {
-        open = NO;
-    }
-    
-    if (open) {
-        self.lastDrop = now;
-    }
+//    if (!canOpen) {
+//        open = NO;
+//    }
+//    
+//    if (open) {
+//        self.lastDrop = now;
+//    }
 
     self.valve.shouldBeOpen = open;
 

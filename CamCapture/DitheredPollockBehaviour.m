@@ -10,6 +10,8 @@
 #import "Settings.h"
 #include BEHAVIOUR_HEADER
 
+#define ROUND_VAL 1000000
+
 @interface DitheredPollockBehaviour()
 
 @property (strong) BEHAVIOUR_CLASS* behaviour;
@@ -47,9 +49,9 @@
     self.height = DITHER_MATRIX_HEIGHT;
     self.matrixData = [NSMutableData dataWithLength:sizeof(float) * self.width * self.height];
     self.stepsize = (ABS(DITHER_GRID_MAX_VALUE) + ABS(DITHER_GRID_MIN_VALUE)) / ABS(MAX(DITHER_MATRIX_WIDTH, DITHER_MATRIX_HEIGHT));  // calculate the step size for our matrix
+    self.stepsize = floorf(self.stepsize * ROUND_VAL) / ROUND_VAL;
     float max_val = MAX(ABS(DITHER_GRID_MIN_VALUE), ABS(DITHER_GRID_MAX_VALUE));
-    self.coordMove = 0;
-    self.coordMove = ABS(max_val);
+    self.coordMove = max_val;
     
     NSLog(@"matrix: %d x %d, step size: %f, coord move: %f", self.width, self.height, self.stepsize, self.coordMove);
 
@@ -63,11 +65,17 @@
 }
 
 /* determine whether the valve should be open or not based on most recent tracking information */
-- (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time canOpen:(BOOL)canOpen {
-  BOOL open = [self.behaviour shouldOpenWithTrackResult:tracked position:position at:time canOpen:canOpen];
+- (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time canOpen:(BOOL)canOpen outPos:(NSPoint *)out_projectionPoint {
+  NSPoint pp;
+  BOOL open = [self.behaviour shouldOpenWithTrackResult:tracked position:position at:time canOpen:canOpen outPos:&pp];
   
   if(open) {
-    open = [self shouldOpenForPos:position];
+    
+//    NSPoint p = NSMakePoint(floor(position.x * ROUND_VAL) / ROUND_VAL,
+//                            floor(position.y * ROUND_VAL) / ROUND_VAL);
+//    open = [self shouldOpenForPos:p];
+    
+    open = [self shouldOpenForPos:pp];
   }
   
   return open;
@@ -80,7 +88,7 @@
   int xImg = [self getMatrixPositionFor:point.x];
   int yImg = [self getMatrixPositionFor:point.y];
   
-//  NSLog(@"%f x %f -> %d x %d", point.x + 1, point.y + 1, xImg, yImg);
+//  NSLog(@"%f x %f -> %d x %d", point.x, point.y, xImg, yImg);
   
   float origVal = [self matrixValueAtX:xImg y:yImg];
   
@@ -91,25 +99,26 @@
     float newVal = origVal + DITHER_VALUE_ADD;
     [self setMatrixValueAtX:xImg y:yImg to:newVal];
     
-    // calculate neigbours
-    for(int x = 1; x <= 2; x++) {
-      float addFieldValue = [self ease:self.stepsize * x];
-      
-      switch (x) {
-        case 1:
-          [self addValueToXPlusOne:addFieldValue x:xImg y:yImg];
-          break;
-        case 2:
-          [self addValueToXPlusTwo:addFieldValue x:xImg y:yImg];
-          break;
-        default:
-          break;
-      }
-    }
+    float addFieldValue = [self ease:self.stepsize];
+    [self addValueToXPlusOne:addFieldValue x:xImg y:yImg];
     
+    addFieldValue = [self ease:self.stepsize * 2];
+    [self addValueToXPlusOne:addFieldValue x:xImg y:yImg];
     
-//    if(newVal > 0) {
-//      NSLog(@"point(%d, %d): orig: %f new: %f", xImg, yImg, origVal, newVal);
+//    // calculate neigbours
+//    for(int x = 1; x <= 2; x++) {
+//      float addFieldValue = [self ease:self.stepsize * x];
+//      
+//      switch (x) {
+//        case 1:
+//          [self addValueToXPlusOne:addFieldValue x:xImg y:yImg];
+//          break;
+//        case 2:
+//          [self addValueToXPlusTwo:addFieldValue x:xImg y:yImg];
+//          break;
+//        default:
+//          break;
+//      }
 //    }
     
     retVal = true;
@@ -206,26 +215,31 @@
 
 -(void) drawMatrixInRect:(NSRect) rect {
   
-  float minCells = MIN(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT));
-  float maxCells = MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT));
-  float minSide = MIN(rect.size.width, rect.size.height);
-  float maxSide = MAX(rect.size.width, rect.size.height);
+//  float minCells = MIN(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT));
+//  float maxCells = MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT));
   
-  float cellWidth = maxSide / maxCells;
-  float cellHeight = minSide / minCells;
+  float cellWidth = 1;
+  float cellHeight = 1;
   
-  for(int x = 0; x < maxCells; x++) {
-    for(int y = 0; y < minCells; y++) {
+  for(int x = 0; x < self.width; x++) {
+    for(int y = 0; y < self.height; y++) {
       float val = [self matrixValueAtX:x y:y];
+      
+      //rotate x/y by 90°
+      int xx = y * -1 + self.width;
+      int yy = x;
+      
       if(val > 0) {
         [[NSColor colorWithRed:1.0 green:0 blue:0 alpha:val] set];
-        NSRectFill(NSMakeRect(cellWidth * x,cellHeight * y, cellWidth, cellHeight));
+        NSRectFill(NSMakeRect(cellWidth * yy,cellHeight * xx, cellWidth, cellHeight));
       }
+//      else {
+//        [[NSColor colorWithRed:0.0 green:0 blue:0 alpha:1.0] set];
+//        NSRectFill(NSMakeRect(cellWidth * yy,cellHeight * xx, cellWidth, cellHeight));
+//      }
     }
   }
 }
-
-
 
 /* optional method to show current state */
 - (void) visualizeInRect:(NSRect)rect {
