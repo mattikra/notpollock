@@ -84,20 +84,20 @@
     }
 
     NSTimeInterval now = [[NSDate date] timeIntervalSinceReferenceDate];
-  BOOL canOpen = true; //(now - self.lastDrop > DROP_DEAD_TIME_S);
+    BOOL canOpen = (now - self.lastDrop > DROP_DEAD_TIME_S);
     BOOL open = [self.behaviour shouldOpenWithTrackResult:detected
                                                  position:pos
                                                        at:timestamp
                                                   canOpen:canOpen
                                                       outPos:NULL];
   
-//    if (!canOpen) {
-//        open = NO;
-//    }
-//    
-//    if (open) {
-//        self.lastDrop = now;
-//    }
+    if (!canOpen) {
+        open = NO;
+    }
+    
+    if (open) {
+        self.lastDrop = now;
+    }
 
     self.valve.shouldBeOpen = open;
 

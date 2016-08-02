@@ -66,15 +66,15 @@
 
 /* determine whether the valve should be open or not based on most recent tracking information */
 - (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time canOpen:(BOOL)canOpen outPos:(NSPoint *)out_projectionPoint {
+  
+  // early exit
+  if(!canOpen)
+    return false;
+  
   NSPoint pp;
   BOOL open = [self.behaviour shouldOpenWithTrackResult:tracked position:position at:time canOpen:canOpen outPos:&pp];
   
   if(open) {
-    
-//    NSPoint p = NSMakePoint(floor(position.x * ROUND_VAL) / ROUND_VAL,
-//                            floor(position.y * ROUND_VAL) / ROUND_VAL);
-//    open = [self shouldOpenForPos:p];
-    
     open = [self shouldOpenForPos:pp];
   }
   
@@ -214,9 +214,6 @@
 }
 
 -(void) drawMatrixInRect:(NSRect) rect {
-  
-//  float minCells = MIN(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT));
-//  float maxCells = MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT));
   
   float cellWidth = 1;
   float cellHeight = 1;
