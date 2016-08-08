@@ -112,118 +112,30 @@
   
   [self setMatrixValueAtX:xImg y:yImg to:origVal];
   
-  float addFieldValue = [self ease:self.stepsize];
-  [self addValue:addFieldValue toXPlus:1 x:xImg y:yImg];
-
-  addFieldValue = [self ease:self.stepsize * 2];
-  [self addValue:addFieldValue toXPlus:2 x:xImg y:yImg];
+  for(int x = 1; x <= 3; x++) {
+    float addFieldValue = [self ease:self.stepsize * x];
+    [self addValue:addFieldValue toXPlus:x x:xImg y:yImg];
+  }
   
-  addFieldValue = [self ease:self.stepsize * 3];
-  [self addValue:addFieldValue toXPlus:3 x:xImg y:yImg];
+//  float addFieldValue = [self ease:self.stepsize];
+//  [self addValue:addFieldValue toXPlus:1 x:xImg y:yImg];
+//
+//  addFieldValue = [self ease:self.stepsize * 2];
+//  [self addValue:addFieldValue toXPlus:2 x:xImg y:yImg];
+//  
+//  addFieldValue = [self ease:self.stepsize * 3];
+//  [self addValue:addFieldValue toXPlus:3 x:xImg y:yImg];
+//  
+//  addFieldValue = [self ease:self.stepsize * 4];
+//  [self addValue:addFieldValue toXPlus:4 x:xImg y:yImg];
+//  
+//  addFieldValue = [self ease:self.stepsize * 5];
+//  [self addValue:addFieldValue toXPlus:5 x:xImg y:yImg];
 
   NSLog(@"(%d / %d) -> %f -> %@", xImg, yImg, origVal, (retVal)?@"true":@"false");
   
-//  if(origVal > DITHER_MAX_TRESHOLD) {
-//    retVal = false;
-//  } else {
-//    
-//    float newVal = origVal + DITHER_VALUE_ADD;
-//    [self setMatrixValueAtX:xImg y:yImg to:newVal];
-//    
-//    NSLog(@"(%d / %d) -> %f", xImg, yImg, newVal);
-//    
-//    float addFieldValue = [self ease:self.stepsize];
-//    [self addValueToXPlusOne:addFieldValue x:xImg y:yImg];
-//    
-//    addFieldValue = [self ease:self.stepsize * 2];
-//    [self addValueToXPlusOne:addFieldValue x:xImg y:yImg];
-//    
-//    retVal = true;
-//  }
-  
   return retVal;
 }
-
-//-(void) addValueToXPlusOne:(float)val x:(int)x y:(int)y {
-//  
-//  // (-1/0)
-//  if(x-1 >= 0) {
-//    float newVal = [self matrixValueAtX:x-1 y:y] + val;
-//    [self setMatrixValueAtX:x-1 y:y to:newVal];
-//  }
-//  
-//  // (-1/-1)
-//  if(x-1 >= 0 && y-1 >= 0) {
-//    float newVal = [self matrixValueAtX:x-1 y:y-1] + val;
-//    [self setMatrixValueAtX:x-1 y:y-1 to:newVal];
-//  }
-//  
-//  // (-1/1)
-//  if(x-1 >= 0 && y+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
-//    float newVal = [self matrixValueAtX:x-1 y:y+1] + val;
-//    [self setMatrixValueAtX:x-1 y:y+1 to:newVal];
-//  }
-//  
-//  // (0/1)
-//  if(y+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
-//    float newVal = [self matrixValueAtX:x y:y+1] + val;
-//    [self setMatrixValueAtX:x y:y+1 to:newVal];
-//  }
-//  
-//  // (0/-1)
-//  if(y-1 >= 0) {
-//    float newVal = [self matrixValueAtX:x y:y-1] + val;
-//    [self setMatrixValueAtX:x y:y-1 to:newVal];
-//  }
-//  
-//  // (1/1)
-//  if(x+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))
-//     && y+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
-//    float newVal = [self matrixValueAtX:x+1 y:y+1] + val;
-//    [self setMatrixValueAtX:x+1 y:y+1 to:newVal];
-//  }
-//  
-//  // (1/0)
-//  if(x+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
-//    float newVal = [self matrixValueAtX:x+1 y:y] + val;
-//    [self setMatrixValueAtX:x+1 y:y to:newVal];
-//  }
-//  
-//  // (1/-1)
-//  if(x+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT)) && y-1 >= 0) {
-//    float newVal = [self matrixValueAtX:x+1 y:y-1] + val;
-//    [self setMatrixValueAtX:x+1 y:y-1 to:newVal];
-//  }
-//  
-//}
-//
-//-(void) addValueToXPlusTwo:(float)val x:(int)x y:(int)y{
-//  
-//  // (-2/0)
-//  if(x-2 >= 0) {
-//    float newVal = [self matrixValueAtX:x-2 y:y] + val;
-//    [self setMatrixValueAtX:x-2 y:y to:newVal];
-//  }
-//  
-//  // (0/2)
-//  if(y+2 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
-//    float newVal = [self matrixValueAtX:x y:y+2] + val;
-//    [self setMatrixValueAtX:x y:y+2 to:newVal];
-//  }
-//  
-//  // (0/-2)
-//  if(y-2 >= 0) {
-//    float newVal = [self matrixValueAtX:x y:y-2] + val;
-//    [self setMatrixValueAtX:x y:y-2 to:newVal];
-//  }
-//  
-//  // (2/0)
-//  if(x+2 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
-//    float newVal = [self matrixValueAtX:x+2 y:y] + val;
-//    [self setMatrixValueAtX:x+2 y:y to:newVal];
-//  }
-//  
-//}
 
 -(void) addValue:(float)val toXPlus:(int)diff_val x:(int)x y:(int)y {
   for(int xpos = x - diff_val; xpos <= x + diff_val; xpos++) {
