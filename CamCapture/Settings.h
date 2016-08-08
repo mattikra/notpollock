@@ -23,14 +23,15 @@
 #define VALVE_LATENCY 0.15   /* valve release latency (e.g. BLE / physical) */
 #define TEMPLATE_SCALE 0.5   /* target scale */
 
-#define DROP_DEAD_TIME_S 0.5 /* dead time after each drop */
+#define DROP_DEAD_TIME_S 0.2 /* dead time after each drop */
 
 /* DITHERING */
 
-#define DITHER_MATRIX_HEIGHT 750   /* Dithering Matrix height */
-#define DITHER_MATRIX_WIDTH 750    /* Dithering Matrix height */
+#define DITHER_MATRIX_HEIGHT 600   /* Dithering Matrix height */
+#define DITHER_MATRIX_WIDTH 600    /* Dithering Matrix height */
 #define DITHER_GRID_MAX_VALUE 1.0   /* Max value to build the grid */
 #define DITHER_GRID_MIN_VALUE -1.0  /* Min value to build the grid */
 
 #define DITHER_VALUE_ADD 0.3             /* Value to add to a field */
+#define DITHER_VALUE_ADD_FAKTOR 0.9             /* Value to add to a field */
 #define DITHER_MAX_TRESHOLD 1.0     /* if x >= value is reached do not fire/open */

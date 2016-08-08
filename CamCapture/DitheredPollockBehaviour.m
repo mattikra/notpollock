@@ -67,9 +67,9 @@
 /* determine whether the valve should be open or not based on most recent tracking information */
 - (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time canOpen:(BOOL)canOpen outPos:(NSPoint *)out_projectionPoint {
   
-  // early exit
-  if(!canOpen)
-    return false;
+//  // early exit
+//  if(!canOpen)
+//    return false;
   
   NSPoint pp;
   BOOL open = [self.behaviour shouldOpenWithTrackResult:tracked position:position at:time canOpen:canOpen outPos:&pp];
@@ -92,120 +92,158 @@
   
   float origVal = [self matrixValueAtX:xImg y:yImg];
   
-  if(origVal > DITHER_MAX_TRESHOLD) {
-    retVal = false;
-  } else {
-    
-    float newVal = origVal + DITHER_VALUE_ADD;
-    [self setMatrixValueAtX:xImg y:yImg to:newVal];
-    
-    float addFieldValue = [self ease:self.stepsize];
-    [self addValueToXPlusOne:addFieldValue x:xImg y:yImg];
-    
-    addFieldValue = [self ease:self.stepsize * 2];
-    [self addValueToXPlusOne:addFieldValue x:xImg y:yImg];
-    
-//    // calculate neigbours
-//    for(int x = 1; x <= 2; x++) {
-//      float addFieldValue = [self ease:self.stepsize * x];
-//      
-//      switch (x) {
-//        case 1:
-//          [self addValueToXPlusOne:addFieldValue x:xImg y:yImg];
-//          break;
-//        case 2:
-//          [self addValueToXPlusTwo:addFieldValue x:xImg y:yImg];
-//          break;
-//        default:
-//          break;
-//      }
-//    }
-    
+  //    float testval = 1.3f;
+  //    NSLog(@"0: %.5f", testval);
+  //    for (int x = 1; x < 1000; x++) {
+  //      testval = testval * DITHER_VALUE_ADD_FAKTOR;
+  //      if(testval < 1.0) {
+  //        testval += 1 + DITHER_VALUE_ADD;
+  //        NSLog(@"%d: %.5f", x, testval);
+  //      }
+  //    }
+  
+  if(origVal < DITHER_MAX_TRESHOLD) {
     retVal = true;
+    origVal += DITHER_MAX_TRESHOLD + DITHER_VALUE_ADD;
+  } else {
+    retVal = false;
+    origVal = origVal * DITHER_VALUE_ADD_FAKTOR;
   }
+  
+  [self setMatrixValueAtX:xImg y:yImg to:origVal];
+  
+  float addFieldValue = [self ease:self.stepsize];
+  [self addValue:addFieldValue toXPlus:1 x:xImg y:yImg];
+
+  addFieldValue = [self ease:self.stepsize * 2];
+  [self addValue:addFieldValue toXPlus:2 x:xImg y:yImg];
+  
+  addFieldValue = [self ease:self.stepsize * 3];
+  [self addValue:addFieldValue toXPlus:3 x:xImg y:yImg];
+
+  NSLog(@"(%d / %d) -> %f -> %@", xImg, yImg, origVal, (retVal)?@"true":@"false");
+  
+//  if(origVal > DITHER_MAX_TRESHOLD) {
+//    retVal = false;
+//  } else {
+//    
+//    float newVal = origVal + DITHER_VALUE_ADD;
+//    [self setMatrixValueAtX:xImg y:yImg to:newVal];
+//    
+//    NSLog(@"(%d / %d) -> %f", xImg, yImg, newVal);
+//    
+//    float addFieldValue = [self ease:self.stepsize];
+//    [self addValueToXPlusOne:addFieldValue x:xImg y:yImg];
+//    
+//    addFieldValue = [self ease:self.stepsize * 2];
+//    [self addValueToXPlusOne:addFieldValue x:xImg y:yImg];
+//    
+//    retVal = true;
+//  }
   
   return retVal;
 }
 
--(void) addValueToXPlusOne:(float)val x:(int)x y:(int)y {
-  
-  // (-1/0)
-  if(x-1 >= 0) {
-    float newVal = [self matrixValueAtX:x-1 y:y] + val;
-    [self setMatrixValueAtX:x-1 y:y to:newVal];
-  }
-  
-  // (-1/-1)
-  if(x-1 >= 0 && y-1 >= 0) {
-    float newVal = [self matrixValueAtX:x-1 y:y-1] + val;
-    [self setMatrixValueAtX:x-1 y:y-1 to:newVal];
-  }
-  
-  // (-1/1)
-  if(x-1 >= 0 && y+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
-    float newVal = [self matrixValueAtX:x-1 y:y+1] + val;
-    [self setMatrixValueAtX:x-1 y:y+1 to:newVal];
-  }
-  
-  // (0/1)
-  if(y+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
-    float newVal = [self matrixValueAtX:x y:y+1] + val;
-    [self setMatrixValueAtX:x y:y+1 to:newVal];
-  }
-  
-  // (0/-1)
-  if(y-1 >= 0) {
-    float newVal = [self matrixValueAtX:x y:y-1] + val;
-    [self setMatrixValueAtX:x y:y-1 to:newVal];
-  }
-  
-  // (1/1)
-  if(x+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))
-     && y+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
-    float newVal = [self matrixValueAtX:x+1 y:y+1] + val;
-    [self setMatrixValueAtX:x+1 y:y+1 to:newVal];
-  }
-  
-  // (1/0)
-  if(x+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
-    float newVal = [self matrixValueAtX:x+1 y:y] + val;
-    [self setMatrixValueAtX:x+1 y:y to:newVal];
-  }
-  
-  // (1/-1)
-  if(x+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT)) && y-1 >= 0) {
-    float newVal = [self matrixValueAtX:x+1 y:y-1] + val;
-    [self setMatrixValueAtX:x+1 y:y-1 to:newVal];
-  }
-  
-}
+//-(void) addValueToXPlusOne:(float)val x:(int)x y:(int)y {
+//  
+//  // (-1/0)
+//  if(x-1 >= 0) {
+//    float newVal = [self matrixValueAtX:x-1 y:y] + val;
+//    [self setMatrixValueAtX:x-1 y:y to:newVal];
+//  }
+//  
+//  // (-1/-1)
+//  if(x-1 >= 0 && y-1 >= 0) {
+//    float newVal = [self matrixValueAtX:x-1 y:y-1] + val;
+//    [self setMatrixValueAtX:x-1 y:y-1 to:newVal];
+//  }
+//  
+//  // (-1/1)
+//  if(x-1 >= 0 && y+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
+//    float newVal = [self matrixValueAtX:x-1 y:y+1] + val;
+//    [self setMatrixValueAtX:x-1 y:y+1 to:newVal];
+//  }
+//  
+//  // (0/1)
+//  if(y+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
+//    float newVal = [self matrixValueAtX:x y:y+1] + val;
+//    [self setMatrixValueAtX:x y:y+1 to:newVal];
+//  }
+//  
+//  // (0/-1)
+//  if(y-1 >= 0) {
+//    float newVal = [self matrixValueAtX:x y:y-1] + val;
+//    [self setMatrixValueAtX:x y:y-1 to:newVal];
+//  }
+//  
+//  // (1/1)
+//  if(x+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))
+//     && y+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
+//    float newVal = [self matrixValueAtX:x+1 y:y+1] + val;
+//    [self setMatrixValueAtX:x+1 y:y+1 to:newVal];
+//  }
+//  
+//  // (1/0)
+//  if(x+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
+//    float newVal = [self matrixValueAtX:x+1 y:y] + val;
+//    [self setMatrixValueAtX:x+1 y:y to:newVal];
+//  }
+//  
+//  // (1/-1)
+//  if(x+1 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT)) && y-1 >= 0) {
+//    float newVal = [self matrixValueAtX:x+1 y:y-1] + val;
+//    [self setMatrixValueAtX:x+1 y:y-1 to:newVal];
+//  }
+//  
+//}
+//
+//-(void) addValueToXPlusTwo:(float)val x:(int)x y:(int)y{
+//  
+//  // (-2/0)
+//  if(x-2 >= 0) {
+//    float newVal = [self matrixValueAtX:x-2 y:y] + val;
+//    [self setMatrixValueAtX:x-2 y:y to:newVal];
+//  }
+//  
+//  // (0/2)
+//  if(y+2 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
+//    float newVal = [self matrixValueAtX:x y:y+2] + val;
+//    [self setMatrixValueAtX:x y:y+2 to:newVal];
+//  }
+//  
+//  // (0/-2)
+//  if(y-2 >= 0) {
+//    float newVal = [self matrixValueAtX:x y:y-2] + val;
+//    [self setMatrixValueAtX:x y:y-2 to:newVal];
+//  }
+//  
+//  // (2/0)
+//  if(x+2 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
+//    float newVal = [self matrixValueAtX:x+2 y:y] + val;
+//    [self setMatrixValueAtX:x+2 y:y to:newVal];
+//  }
+//  
+//}
 
--(void) addValueToXPlusTwo:(float)val x:(int)x y:(int)y{
-  
-  // (-2/0)
-  if(x-2 >= 0) {
-    float newVal = [self matrixValueAtX:x-2 y:y] + val;
-    [self setMatrixValueAtX:x-2 y:y to:newVal];
+-(void) addValue:(float)val toXPlus:(int)diff_val x:(int)x y:(int)y {
+  for(int xpos = x - diff_val; xpos <= x + diff_val; xpos++) {
+    if(xpos >= 0) {
+      for(int ypos = y - diff_val; ypos <= y + diff_val; ypos++) {
+        if(ypos >= 0) {
+          if(xpos == x && ypos == y)
+            continue;
+          
+          float origVal = [self matrixValueAtX:xpos y:ypos];
+          if(origVal < DITHER_MAX_TRESHOLD) {
+            origVal += (DITHER_MAX_TRESHOLD / (ABS(xpos - x) + ABS(ypos - y))) + val;
+          } else {
+            origVal = (origVal + val) * DITHER_VALUE_ADD_FAKTOR;
+          }
+          [self setMatrixValueAtX:xpos y:ypos to:origVal];
+        }
+      }
+    }
   }
-  
-  // (0/2)
-  if(y+2 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
-    float newVal = [self matrixValueAtX:x y:y+2] + val;
-    [self setMatrixValueAtX:x y:y+2 to:newVal];
-  }
-  
-  // (0/-2)
-  if(y-2 >= 0) {
-    float newVal = [self matrixValueAtX:x y:y-2] + val;
-    [self setMatrixValueAtX:x y:y-2 to:newVal];
-  }
-  
-  // (2/0)
-  if(x+2 <= MAX(ABS(DITHER_MATRIX_WIDTH), ABS(DITHER_MATRIX_HEIGHT))) {
-    float newVal = [self matrixValueAtX:x+2 y:y] + val;
-    [self setMatrixValueAtX:x+2 y:y to:newVal];
-  }
-  
 }
 
 -(float) ease:(float)stepSum{
