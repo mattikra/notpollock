@@ -14,6 +14,7 @@
 #import "ValveCommunicator.h"
 #import "Settings.h"
 #include DITHER_HEADER
+
 //#import "FloydSteinbergDithering.h"
 
 @interface AppDelegate () <CameraGrabberDelegate>
@@ -47,14 +48,17 @@
     self.grabber.delegate = self;
     self.markerDetector = [MarkerDetector new];
     self.fakeMarkerDetector = [FakeMarkerDetector new];
-    NSURL* templateURL = [[NSBundle mainBundle] URLForImageResource:@"Slice5"];
+    NSURL* templateURL = [[NSBundle mainBundle] URLForImageResource:TEMPLATE_NAME];
     self.behaviour = [[DITHER_CLASS alloc] initWithTemplateURL:templateURL];
     self.behaviour.idleHeight = CAN_HEIGHT;
-    self.behaviour.templateScale = TEMPLATE_SCALE;
     self.behaviour.releaseDelay = VALVE_LATENCY;
     self.fakeTracking = NO;
     self.lastDrop = 0.0;
-  
+    self.doDrop = NO;
+    self.centerX = 0.0;
+    self.centerY = 0.0;
+    self.roiSize = 0.5;
+    self.thresSens = THRESHOLD_PERCENT * 0.01;
 }
 
 //-(void) reInitDithering: (BOOL) fake {
@@ -77,52 +81,100 @@
 - (void) handleCameraFrame:(NSBitmapImageRep*)frame timestamp:(NSDate*)timestamp {
     NSPoint pos;
     BOOL detected = NO;
+    
+    //determine ROI region
+    int width = (int)[frame pixelsWide];
+    int height = (int)[frame pixelsHigh];
+    int roiMinX = (self.centerX / 2.0 + 0.5) * width - 0.5 * MAX(width,height) * self.roiSize;
+    int roiMinY = (self.centerY / 2.0 + 0.5) * height - 0.5 * MAX(width,height) * self.roiSize;
+    int roiMaxX = (self.centerX / 2.0 + 0.5) * width + 0.5 * MAX(width,height) * self.roiSize;
+    int roiMaxY = (self.centerY / 2.0 + 0.5) * height + 0.5 * MAX(width,height) * self.roiSize;
+    if (roiMinX < 0) roiMinX = 0;
+    if (roiMinY < 0) roiMinY = 0;
+    if (roiMaxX >= width) roiMaxX = width-1;
+    if (roiMaxY >= height) roiMaxY = height-1;
+
+    //Try to find the marker
     if (self.fakeTracking) {
         detected = [self.fakeMarkerDetector detectMarkerInFrame:frame outPosition:&pos];
     } else {
-        detected = [self.markerDetector detectMarkerInFrame:frame outPosition:&pos];
+        detected = [self.markerDetector detectMarkerInFrame:frame
+                                                    roiMinX:roiMinX
+                                                    roiMaxX:roiMaxX
+                                                    roiMinY:roiMinY
+                                                    roiMaxY:roiMaxY
+                                                       sens:self.thresSens
+                                                outPosition:&pos];
     }
 
+    //determine if we should drop
     NSTimeInterval now = [[NSDate date] timeIntervalSinceReferenceDate];
     BOOL canOpen = (now - self.lastDrop > DROP_DEAD_TIME_S);
+    if (!self.doDrop) canOpen = NO;
     BOOL open = [self.behaviour shouldOpenWithTrackResult:detected
                                                  position:pos
                                                        at:timestamp
                                                   canOpen:canOpen
                                                       outPos:NULL];
-  
     if (!canOpen) {
         open = NO;
     }
-    
     if (open) {
         self.lastDrop = now;
     }
-
     self.valve.shouldBeOpen = open;
 
     //Real handling done. Now visualize.
-    
-    int width = (int)frame.pixelsWide;
-    int height = (int)frame.pixelsHigh;
-    int major = MAX(width, height);
     NSImage* image = [NSImage imageWithSize:NSMakeSize(width, height) flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
         [frame drawInRect:dstRect];
+        [NSGraphicsContext saveGraphicsState];
+        NSAffineTransform* transform = [NSAffineTransform transform];
+        //transform: -1 sould go to roiMin, 1 should go to roiMax
+        [transform translateXBy:(roiMaxX+roiMinX)/2.0 yBy:(roiMaxY+roiMinY)/2.0];
+        [transform scaleXBy:(roiMaxX-roiMinX)/2.0 yBy:(roiMinY-roiMaxY)/2.0];
+        [transform concat];
+
+#ifdef SHOW_ROI
+        NSBezierPath* path = [NSBezierPath bezierPath];
+        [path moveToPoint:NSMakePoint(-1,-1)];
+        [path lineToPoint:NSMakePoint( 1,-1)];
+        [path lineToPoint:NSMakePoint( 1, 1)];
+        [path lineToPoint:NSMakePoint(-1, 1)];
+        [path closePath];
+        [path moveToPoint:NSMakePoint(-0.1, 0)];
+        [path lineToPoint:NSMakePoint( 0.1, 0)];
+        [path moveToPoint:NSMakePoint(0, -0.1)];
+        [path lineToPoint:NSMakePoint(0,  0.1)];
+        [[NSColor blueColor] set];
+        [path setLineWidth:0.01];
+        [path stroke];
+#endif
         if (detected) {
+        
+            NSBezierPath* path = [NSBezierPath bezierPath];
+            [path moveToPoint:NSMakePoint(pos.x-0.1, pos.y-0.1)];
+            [path lineToPoint:NSMakePoint(pos.x+0.1, pos.y+0.1)];
+            [path moveToPoint:NSMakePoint(pos.x+0.1, pos.y-0.1)];
+            [path lineToPoint:NSMakePoint(pos.x-0.1, pos.y+0.1)];
             [[NSColor redColor] set];
-            float xImg = (pos.x / 2.0) * major + (width / 2.0);
-            float yImg = (pos.y / 2.0) * major + (height / 2.0);
-            [[NSBezierPath bezierPathWithRect:NSMakeRect(xImg-100,height-yImg-10,200,20)] fill];
-            [[NSBezierPath bezierPathWithRect:NSMakeRect(xImg-10,height-yImg-100,20,200)] fill];
-          
+            [path setLineWidth:0.01];
+            [path stroke];
+            
             if ([self.behaviour respondsToSelector:@selector(visualizeInRect:)]) {
                 [self.behaviour visualizeInRect:dstRect];
             }
+
+            [NSGraphicsContext restoreGraphicsState];
         }
         return YES;
     }];
     
     self.imageView.image = image;
+}
+
+- (void)setRoiCenter {
+    self.centerX = self.markerDetector.lastRawPoint.x;
+    self.centerY = self.markerDetector.lastRawPoint.y;
 }
 
 @end

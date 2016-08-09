@@ -12,10 +12,19 @@
 
 @interface MarkerDetector : NSObject
 
+@property (assign) NSPoint lastRawPoint;
+
 /*
  detect the marker. Returns YES if marker was detected. In this case, the output position is
- returned in outPt (if non-NULL). Position origin is image center, normalized in (-1,1) along major axis */
+ returned in outPt (if non-NULL). ROI is in image pixels, can be assumed to lie entirely inside image
+ Position is normalized in (-1,1) for ROI */
 
-- (BOOL) detectMarkerInFrame:(NSBitmapImageRep*)frame outPosition:(NSPoint*)pt;
+- (BOOL) detectMarkerInFrame:(NSBitmapImageRep*)frame
+                     roiMinX:(int)roiMinX
+                     roiMaxX:(int)roiMaxX
+                     roiMinY:(int)roiMinY
+                     roiMaxY:(int)roiMaxY
+                        sens:(double)sens
+                 outPosition:(NSPoint*)pt;
 
 @end

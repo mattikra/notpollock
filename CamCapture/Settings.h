@@ -14,16 +14,29 @@
 #define BEHAVIOUR_CLASS SimplePollockBehaviour
 #define BEHAVIOUR_HEADER "SimplePollockBehaviour.h"
 
+#define TEMPLATE_NAME @"Slice"
+
 //tracking parameters
 #define THRESHOLD_PERCENT 90 /* threshold with x percent of brightest pixel */
-#define WINDOW_MIN 3         /* minimum valid BBOX size */
-#define WINDOW_MAX 20        /* maximum valid BBOX size */
+#define WINDOW_MIN 50         /* minimum valid BBOX size */
+#define WINDOW_MAX 160        /* maximum valid BBOX size */
+#define SHOW_ROI YES
+#define SHOW_THRES YES
 
-#define CAN_HEIGHT 1         /* can height above canvas */
-#define VALVE_LATENCY 0.15   /* valve release latency (e.g. BLE / physical) */
-#define TEMPLATE_SCALE 0.5   /* target scale */
+//path estimation properties
+#define MIN_TRACK_SEQUENCE 10
+#define ESTIMATE_QUADRATIC YES
+//#define ESTIMATE_SINUSOIDAL YES
 
-#define DROP_DEAD_TIME_S 0.5 /* dead time after each drop */
+//latencies / physical properties
+#define PENDULUM_LENGTH 1.95  /* length of pendulum in m */
+#define CAN_HEIGHT 1.0        /* can height above canvas in m */
+#define CANVAS_SIZE_M 1.4     /* canvas size (one edge of square) in m */
+#define VALVE_LATENCY 0.3     /* valve release latency in s (e.g. BLE / physical) */
+#define TEMPLATE_SCALE 0.5    /* target scale */
+#define VALVE_ON_TIME_S 0.1   /* valve on time in s */
+#define DROP_DEAD_TIME_S 1.0  /* dead time after each drop in s */
+
 
 /* DITHERING */
 

@@ -19,7 +19,6 @@
 @property (assign) NSPoint idlePoint;    //tracked center point when pendulum is idle
 @property (assign) double idleHeight;    //height above canvas in m when pendulum is idle
 @property (assign) double releaseDelay;  //drop release latency in s
-@property (assign) double templateScale; //arbitrary scale factor (0..1) - use full tracking range for 1
 
 /* initialize with a given template image URL */
 - (id) initWithTemplateURL:(NSURL*)url;
@@ -29,7 +28,7 @@
 
 @optional
 
-/* optional method to show current state */
+/* optional method to show current state. Transform is set to put ROI (draw canvas) at -1/1 rect */
 - (void) visualizeInRect:(NSRect)rect;
 
 

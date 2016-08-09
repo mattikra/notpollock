@@ -91,4 +91,9 @@
         [self.delegate handleCameraFrame:ir timestamp:date];
     }
 }
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didDropSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+    NSLog(@"dropped sample buffer");
+}
+
 @end

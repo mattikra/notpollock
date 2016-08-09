@@ -35,7 +35,6 @@
 @synthesize idlePoint;     //tracked center point when pendulum is idle
 @synthesize idleHeight;    //height above canvas in m when pendulum is idle
 @synthesize releaseDelay;  //drop release latency in s
-@synthesize templateScale; //arbitrary scale factor (0..1) - use full tracking range for 1
 @synthesize showArray;
 
 /* initialize with a given template image URL */
@@ -43,7 +42,7 @@
   self = [super init];
   if (self) {
     
-    self.showArray = true;
+    self.showArray = false;
     
     self.width = DITHER_MATRIX_WIDTH;
     self.height = DITHER_MATRIX_HEIGHT;
@@ -54,11 +53,9 @@
     self.coordMove = max_val;
     
     NSLog(@"matrix: %d x %d, step size: %f, coord move: %f", self.width, self.height, self.stepsize, self.coordMove);
-
     
     self.behaviour = [[BEHAVIOUR_CLASS alloc] initWithTemplateURL:url];
     self.behaviour.idleHeight = CAN_HEIGHT;
-    self.behaviour.templateScale = TEMPLATE_SCALE;
     self.behaviour.releaseDelay = VALVE_LATENCY;
   }
   return self;
@@ -67,9 +64,9 @@
 /* determine whether the valve should be open or not based on most recent tracking information */
 - (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time canOpen:(BOOL)canOpen outPos:(NSPoint *)out_projectionPoint {
   
-  // early exit
-  if(!canOpen)
-    return false;
+//  // early exit
+//  if(!canOpen)
+//    return false;
   
   NSPoint pp;
   BOOL open = [self.behaviour shouldOpenWithTrackResult:tracked position:position at:time canOpen:canOpen outPos:&pp];

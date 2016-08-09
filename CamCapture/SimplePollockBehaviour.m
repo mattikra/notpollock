@@ -9,11 +9,10 @@
 #import "SimplePollockBehaviour.h"
 #import "Settings.h"
 
-#define MIN_TRACK_SEQUENCE 30
 
 @interface SimplePollockBehaviour () {
-    double xCoeffs[3];    //only for viz
-    double yCoeffs[3];    //only for viz
+    double quadXCoeffs[3];    //only for viz
+    double quadYCoeffs[3];    //only for viz
 }
 
 @property (strong) NSMutableDictionary<NSDate*,NSValue*>* lastTrackPoints;
@@ -34,26 +33,23 @@
 @synthesize idlePoint;     //tracked center point when pendulum is idle
 @synthesize idleHeight;    //height above canvas in m when pendulum is idle
 @synthesize releaseDelay;  //drop release latency in s
-@synthesize templateScale; //arbitrary scale factor (0..1) - use full tracking range for 1
 
 - (id) initWithTemplateURL:(NSURL*)url {
     self = [super init];
     if (self) {
         self.lastTrackPoints = [NSMutableDictionary dictionary];
-        bzero(xCoeffs,sizeof(xCoeffs));
-        bzero(yCoeffs,sizeof(yCoeffs));
+        bzero(quadXCoeffs,sizeof(quadXCoeffs));
+        bzero(quadYCoeffs,sizeof(quadYCoeffs));
         self.template = (NSBitmapImageRep*)[NSImageRep imageRepWithContentsOfURL:url];
         self.wasOpen = NO;
         self.idlePoint = NSMakePoint(0,0);
         self.idleHeight = 1.0;
         self.releaseDelay = 0.15;
-        self.templateScale = 0.5;
     }
     return self;
 }
 
 - (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time canOpen:(BOOL)canOpen outPos:(NSPoint *)out_projectionPoint {
-
     self.wasOpen = NO;
     
     //collect last MIN_TRACK_SEQUENCE samples
@@ -88,11 +84,17 @@
         yy[idx] = pt.y;
         idx++;
     }
-    BOOL ok = [self lsQuadraticFitForSampleCount:MIN_TRACK_SEQUENCE x:times y:xx out:xCoeffs];
+    
+    //motion estimation: fill projectionPoint
+    NSPoint projectionPoint = NSMakePoint(0,0);
+    
+#if defined ESTIMATE_QUADRATIC
+    //estimate motion path
+    BOOL ok = [self lsQuadraticFitForSampleCount:MIN_TRACK_SEQUENCE x:times y:xx out:quadXCoeffs];
     if (!ok) {
         return NO;
     }
-    ok = [self lsQuadraticFitForSampleCount:MIN_TRACK_SEQUENCE x:times y:yy out:yCoeffs];
+    ok = [self lsQuadraticFitForSampleCount:MIN_TRACK_SEQUENCE x:times y:yy out:quadYCoeffs];
     if (!ok) {
         return NO;
     }
@@ -100,32 +102,40 @@
     
     //point where the can would actually release paint if we trigger open now (RF / mechanical delay)
     NSPoint releasePoint = NSMakePoint(
-        xCoeffs[2]*self.releaseDelay*self.releaseDelay + xCoeffs[1]*self.releaseDelay + xCoeffs[0],
-        yCoeffs[2]*self.releaseDelay*self.releaseDelay + yCoeffs[1]*self.releaseDelay + yCoeffs[0]
+        quadXCoeffs[2]*self.releaseDelay*self.releaseDelay + quadXCoeffs[1]*self.releaseDelay + quadXCoeffs[0],
+        quadYCoeffs[2]*self.releaseDelay*self.releaseDelay + quadYCoeffs[1]*self.releaseDelay + quadYCoeffs[0]
     );
     //motion vector of can at actual release point (derivative at release point)
     NSPoint releaseMotion = NSMakePoint(
-        2.0*xCoeffs[2] * self.releaseDelay + xCoeffs[1],
-        2.0*yCoeffs[2] * self.releaseDelay + yCoeffs[1]
+        2.0*quadXCoeffs[2] * self.releaseDelay + quadXCoeffs[1],
+        2.0*quadYCoeffs[2] * self.releaseDelay + quadYCoeffs[1]
     );
     //point where paint would land
     double fallTime = sqrt(2.0 * self.idleHeight / 9.81);
-    NSPoint projectionPoint = NSMakePoint(
+    projectionPoint = NSMakePoint(
         releasePoint.x + fallTime * releaseMotion.x,
         releasePoint.y + fallTime * releaseMotion.y
     );
     
+#elif defined (ESTIMATE_SINUSOIDAL)
+    //TODO ***********************
+    
+#else
+#error ("No path estimation method defined")
+#endif
+
     //check if we're in the region where we should paint at all
-    if ((projectionPoint.x < -self.templateScale) || (projectionPoint.x > self.templateScale) ||
-        (projectionPoint.y < -self.templateScale) || (projectionPoint.y > self.templateScale)) {
+    if ((projectionPoint.x < -1.0) || (projectionPoint.x > 1.0) ||
+        (projectionPoint.y < -1.0) || (projectionPoint.y > 1.0)) {
         return NO;
     }
+
     self.lastProjectionPoint = projectionPoint;
     *out_projectionPoint = projectionPoint;
 
     //look up in template bitmap
-    int lookX = (int)(((projectionPoint.x / self.templateScale) / 2.0 + 0.5) * self.template.pixelsWide);
-    int lookY = (int)(((projectionPoint.y / self.templateScale) / 2.0 + 0.5) * self.template.pixelsHigh);
+    int lookX = (int)(((projectionPoint.x) / 2.0 + 0.5) * self.template.pixelsWide);
+    int lookY = (int)(((projectionPoint.y) / 2.0 + 0.5) * self.template.pixelsHigh);
 //    NSLog(@"mapping %f %f to %i %i",projectionPoint.x, projectionPoint.y, lookX, lookY);
   
     NSColor* color = [self.template colorAtX:lookX y:lookY];
@@ -179,18 +189,8 @@
 }
 
 - (void) visualizeInRect:(NSRect)rect {
-    double width = rect.size.width;
-    double height = rect.size.height;
-    double scale = MAX(width, height) / 2.0;
-
-    NSPoint center = NSMakePoint(NSMidX(rect), NSMidY(rect));
-    double tSize = MAX(rect.size.width*templateScale, rect.size.height*templateScale);
-    NSSize templateSize = NSMakeSize(tSize, tSize);
     
-    NSRect templateRect = NSMakeRect(center.x-0.5 * templateSize.width,
-                                     center.y-0.5 * templateSize.height,
-                                     templateSize.width,
-                                     templateSize.height);
+    NSRect templateRect = NSMakeRect(-1,-1,2,2);
     
     [self.template drawInRect:templateRect
                      fromRect:NSMakeRect(0,0,self.template.pixelsWide,self.template.pixelsHigh)
@@ -199,43 +199,41 @@
                respectFlipped:YES
                         hints:NULL];
 
-    [self.template drawInRect:templateRect];
+//    NSBezierPath* path = [NSBezierPath bezierPath];
+//    NSArray* dates = [self.lastTrackPoints.allKeys sortedArrayUsingSelector:@selector(compare:)];
+//    BOOL first = YES;
+//    for (NSDate* date in dates) {
+//        NSPoint pt = [self.lastTrackPoints[date] pointValue];
+//        double x = pt.x * scale + (width/2.0);
+//        double y = pt.y * scale + (height/2.0);
+//        pt = NSMakePoint(x,height-y);
+//        if (first) {
+//            [path moveToPoint:pt];
+//            first = NO;
+//        } else {
+//            [path lineToPoint:pt];
+//        }
+//    }
 
     NSBezierPath* path = [NSBezierPath bezierPath];
-    NSArray* dates = [self.lastTrackPoints.allKeys sortedArrayUsingSelector:@selector(compare:)];
-    BOOL first = YES;
-    for (NSDate* date in dates) {
-        NSPoint pt = [self.lastTrackPoints[date] pointValue];
-        double x = pt.x * scale + (width/2.0);
-        double y = pt.y * scale + (height/2.0);
-        pt = NSMakePoint(x,height-y);
-        if (first) {
-            [path moveToPoint:pt];
-            first = NO;
-        } else {
-            [path lineToPoint:pt];
-        }
-    }
-
-    path = [NSBezierPath bezierPath];
     for (double t=-1.0; t < 1.0; t+= 0.1) {
-        double x = (xCoeffs[2]*t*t + xCoeffs[1]*t + xCoeffs[0]) * scale + (width/2.0);
-        double y = (yCoeffs[2]*t*t + yCoeffs[1]*t + yCoeffs[0]) * scale + (height/2.0);
-        NSPoint pt = NSMakePoint(x,height-y);
+        double x = (quadXCoeffs[2]*t*t + quadXCoeffs[1]*t + quadXCoeffs[0]);
+        double y = (quadYCoeffs[2]*t*t + quadYCoeffs[1]*t + quadYCoeffs[0]);
+        NSPoint pt = NSMakePoint(x,y);
         if (t == -1.0) {
             [path moveToPoint:pt];
         } else {
             [path lineToPoint:pt];
         }
     }
-    path.lineWidth = 5.0;
+    path.lineWidth = 0.01;
     [[NSColor greenColor] set];
     [path stroke];
     
     [(self.wasOpen ? [NSColor greenColor] : [NSColor redColor]) set];
-    [NSBezierPath fillRect:NSMakeRect(self.lastProjectionPoint.x * scale + (width/2.0) - 10,
-                                      self.lastProjectionPoint.y * -scale + (height/2.0) - 10,
-                                      20,20)];
+    [NSBezierPath fillRect:NSMakeRect(self.lastProjectionPoint.x,
+                                      self.lastProjectionPoint.y,
+                                      0.05, 0.05)];
 }
 
 @end

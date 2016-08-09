@@ -7,6 +7,7 @@
 
 #import "ValveCommunicator.h"
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "Settings.h"
 
 #define POLLOCK_SERVICE_UUID   @"E81CD5C9-998B-40DD-80B9-34EF303046DB"
 #define POLLOCK_COMM_CHAR_UUID  @"E81C2001-998B-40DD-80B9-34EF303046DB"
@@ -206,6 +207,15 @@
             NSData* data = [NSData dataWithBytes:&val length:1];
             [self sendCommand:data];
             self.isOpen = self.shouldBeOpen;
+            if (self.isOpen) {
+                NSTimer* timer = [NSTimer timerWithTimeInterval:VALVE_ON_TIME_S
+                                                         target:self
+                                                       selector:@selector(close:)
+                                                       userInfo:nil
+                                                        repeats:NO];
+                [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+            }
+
         }
     } else {
         self.isOpen = NO;
@@ -213,5 +223,7 @@
     }
 }
 
-
+- (void) close:(id)arg {
+    [self setShouldBeOpen:NO];
+}
 @end
