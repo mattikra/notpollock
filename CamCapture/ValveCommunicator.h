@@ -30,7 +30,6 @@ typedef enum {
 /** valve state - actual */
 @property (readonly, assign) BOOL isOpen;
 
-/** valve state - intended */
-@property (nonatomic, readwrite, assign) BOOL shouldBeOpen;
+- (BOOL) drip;
 
 @end

@@ -16,6 +16,7 @@
 @property (assign, nonatomic) double centerY;       //center y (-1..1) for marker detection transform
 @property (assign, nonatomic) double roiSize;       //region of interest (0..1) for marker detection transform
 @property (assign, nonatomic) double thresSens;     //threshold sensitivity (0..1) for marker detection
+@property (assign, nonatomic) double latency;       //latency in s
 
 
 @end

@@ -12,7 +12,11 @@
 
 #define ROUND_VAL 1000000
 
-@interface DitheredPollockBehaviour()
+@interface DitheredPollockBehaviour() {
+
+double _releaseDelay;
+
+}
 
 @property (strong) BEHAVIOUR_CLASS* behaviour;
 
@@ -34,8 +38,8 @@
 //PollockBehaviour properties
 @synthesize idlePoint;     //tracked center point when pendulum is idle
 @synthesize idleHeight;    //height above canvas in m when pendulum is idle
-@synthesize releaseDelay;  //drop release latency in s
 @synthesize showArray;
+
 
 /* initialize with a given template image URL */
 - (id) initWithTemplateURL:(NSURL*)url {
@@ -61,6 +65,17 @@
   return self;
 }
 
+- (double) releaseDelay {
+    return _releaseDelay;
+}
+
+- (void) setReleaseDelay:(double)releaseDelay {
+    [self willChangeValueForKey:@"releaseDelay"];
+    _releaseDelay = releaseDelay;
+    self.behaviour.releaseDelay = releaseDelay;
+    [self didChangeValueForKey:@"releaseDelay"];
+}
+
 /* determine whether the valve should be open or not based on most recent tracking information */
 - (BOOL) shouldOpenWithTrackResult:(BOOL)tracked position:(NSPoint)position at:(NSDate*)time canOpen:(BOOL)canOpen outPos:(NSPoint *)out_projectionPoint {
   
@@ -69,7 +84,7 @@
 //    return false;
   
   NSPoint pp;
-  BOOL open = [self.behaviour shouldOpenWithTrackResult:tracked position:position at:time canOpen:canOpen outPos:&pp];
+    BOOL open = [self.behaviour shouldOpenWithTrackResult:tracked position:position at:time canOpen:canOpen outPos:&pp];
   
   if(open) {
     open = [self shouldOpenForPos:pp];

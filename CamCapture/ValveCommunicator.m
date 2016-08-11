@@ -186,44 +186,35 @@
         _state = state;
         [self didChangeValueForKey:@"state"];
         self.connected = (state == State_Connected);
-        [self syncValveState];
-    }
-}
-
-- (void) setShouldBeOpen:(BOOL)shouldBeOpen {
-    if (_shouldBeOpen != shouldBeOpen) {
-        [self willChangeValueForKey:@"shouldBeOpen"];
-        _shouldBeOpen = shouldBeOpen;
-        [self didChangeValueForKey:@"shouldBeOpen"];
-
-        [self syncValveState];
-    }
-}
-
-- (void) syncValveState {
-    if (self.connected) {
-        if (self.isOpen != self.shouldBeOpen) {
-            uint8_t val = self.shouldBeOpen;
-            NSData* data = [NSData dataWithBytes:&val length:1];
-            [self sendCommand:data];
-            self.isOpen = self.shouldBeOpen;
-            if (self.isOpen) {
-                NSTimer* timer = [NSTimer timerWithTimeInterval:VALVE_ON_TIME_S
-                                                         target:self
-                                                       selector:@selector(close:)
-                                                       userInfo:nil
-                                                        repeats:NO];
-                [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-            }
-
+        if (self.connected) {
+            [self close:nil];
         }
-    } else {
-        self.isOpen = NO;
-        return;
     }
+}
+
+- (BOOL) drip {
+    if (!self.connected) return NO;
+    if (self.isOpen) return NO;
+
+    self.isOpen = YES;
+    uint8_t val = true;
+    NSData* data = [NSData dataWithBytes:&val length:1];
+    [self sendCommand:data];
+    
+    NSTimer* timer = [NSTimer timerWithTimeInterval:VALVE_ON_TIME_S
+                                             target:self
+                                           selector:@selector(close:)
+                                           userInfo:nil
+                                            repeats:NO];
+    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    return YES;
 }
 
 - (void) close:(id)arg {
-    [self setShouldBeOpen:NO];
+    uint8_t val = false;
+    NSData* data = [NSData dataWithBytes:&val length:1];
+    [self sendCommand:data];
+    self.isOpen = NO;
 }
+
 @end

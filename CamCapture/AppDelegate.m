@@ -57,8 +57,9 @@
     self.doDrop = NO;
     self.centerX = 0.0;
     self.centerY = 0.0;
-    self.roiSize = 0.5;
+    self.roiSize = ROI_SIZE;
     self.thresSens = THRESHOLD_PERCENT * 0.01;
+    self.latency = VALVE_LATENCY;
 }
 
 //-(void) reInitDithering: (BOOL) fake {
@@ -111,6 +112,7 @@
     NSTimeInterval now = [[NSDate date] timeIntervalSinceReferenceDate];
     BOOL canOpen = (now - self.lastDrop > DROP_DEAD_TIME_S);
     if (!self.doDrop) canOpen = NO;
+    self.behaviour.releaseDelay = self.latency;
     BOOL open = [self.behaviour shouldOpenWithTrackResult:detected
                                                  position:pos
                                                        at:timestamp
@@ -121,8 +123,8 @@
     }
     if (open) {
         self.lastDrop = now;
+        [self.valve drip];
     }
-    self.valve.shouldBeOpen = open;
 
     //Real handling done. Now visualize.
     NSImage* image = [NSImage imageWithSize:NSMakeSize(width, height) flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
@@ -130,8 +132,10 @@
         [NSGraphicsContext saveGraphicsState];
         NSAffineTransform* transform = [NSAffineTransform transform];
         //transform: -1 sould go to roiMin, 1 should go to roiMax
+        [transform scaleXBy:1 yBy:-1];
+        [transform translateXBy:0 yBy:-height];
         [transform translateXBy:(roiMaxX+roiMinX)/2.0 yBy:(roiMaxY+roiMinY)/2.0];
-        [transform scaleXBy:(roiMaxX-roiMinX)/2.0 yBy:(roiMinY-roiMaxY)/2.0];
+        [transform scaleXBy:(roiMaxX-roiMinX)/2.0 yBy:(roiMaxY-roiMinY)/2.0];
         [transform concat];
 
 #ifdef SHOW_ROI
