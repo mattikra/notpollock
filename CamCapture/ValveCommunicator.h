@@ -30,6 +30,10 @@ typedef enum {
 /** valve state - actual */
 @property (readonly, assign) BOOL isOpen;
 
+/** valve open duration in s */
+@property (readwrite, assign) double dropLength;
+
+
 - (BOOL) drip;
 
 @end

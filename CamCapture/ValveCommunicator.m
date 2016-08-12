@@ -42,6 +42,8 @@
 - (id) init {
     self = [super init];
     if (!self) return nil;
+    self.dropLength = VALVE_ON_TIME_S;
+
     self.state = State_Initializing;
     self.manager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_queue_create(BLE_QUEUE_NAME, NULL)];
     return self;
@@ -201,7 +203,7 @@
     NSData* data = [NSData dataWithBytes:&val length:1];
     [self sendCommand:data];
     
-    NSTimer* timer = [NSTimer timerWithTimeInterval:VALVE_ON_TIME_S
+    NSTimer* timer = [NSTimer timerWithTimeInterval:self.dropLength
                                              target:self
                                            selector:@selector(close:)
                                            userInfo:nil
