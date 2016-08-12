@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
     </dependencies>
@@ -671,7 +671,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="173" y="238" width="480" height="591"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="591"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -764,32 +764,32 @@
                             <binding destination="Voe-Tx-rLC" name="value" keyPath="doDrop" id="Txr-gU-3YQ"/>
                         </connections>
                     </button>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pmc-eS-EOv">
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmc-eS-EOv">
                         <rect key="frame" x="17" y="17" width="446" height="339"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" id="rwU-hU-Bb5"/>
                     </imageView>
-                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ts9-VG-nRo">
-                        <rect key="frame" x="126" y="456" width="254" height="20"/>
+                    <slider verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ts9-VG-nRo">
+                        <rect key="frame" x="126" y="456" width="254" height="21"/>
                         <sliderCell key="cell" state="on" alignment="left" minValue="-1" maxValue="1" tickMarkPosition="above" sliderType="linear" id="eTZ-ef-WJh"/>
                         <connections>
                             <binding destination="Voe-Tx-rLC" name="value" keyPath="centerX" id="XVM-Zu-Gas"/>
                         </connections>
                     </slider>
-                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wUn-Vm-97p">
-                        <rect key="frame" x="126" y="432" width="254" height="20"/>
+                    <slider verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wUn-Vm-97p">
+                        <rect key="frame" x="126" y="432" width="254" height="21"/>
                         <sliderCell key="cell" state="on" alignment="left" minValue="-1" maxValue="1" tickMarkPosition="above" sliderType="linear" id="MBq-2O-Oih"/>
                         <connections>
                             <binding destination="Voe-Tx-rLC" name="value" keyPath="centerY" id="FAB-KX-cUj"/>
                         </connections>
                     </slider>
-                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G0V-oE-LLH">
-                        <rect key="frame" x="126" y="408" width="336" height="20"/>
+                    <slider verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G0V-oE-LLH">
+                        <rect key="frame" x="126" y="408" width="336" height="21"/>
                         <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" sliderType="linear" id="NGl-BX-ln4"/>
                         <connections>
                             <binding destination="Voe-Tx-rLC" name="value" keyPath="roiSize" id="pLi-5V-G0h"/>
                         </connections>
                     </slider>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CdO-g6-j1m">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CdO-g6-j1m">
                         <rect key="frame" x="18" y="458" width="39" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Idle X" id="4R4-ZP-7bi">
                             <font key="font" metaFont="system"/>
@@ -797,7 +797,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wcy-yp-P6K">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wcy-yp-P6K">
                         <rect key="frame" x="18" y="434" width="38" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Idle Y" id="89U-OB-qmi">
                             <font key="font" metaFont="system"/>
@@ -805,7 +805,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YQp-3Y-j8p">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YQp-3Y-j8p">
                         <rect key="frame" x="18" y="410" width="78" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Canvas Size" id="Uzp-eQ-M8D">
                             <font key="font" metaFont="system"/>
@@ -813,7 +813,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yhd-nA-qm7">
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yhd-nA-qm7">
                         <rect key="frame" x="380" y="448" width="86" height="32"/>
                         <buttonCell key="cell" type="push" title="Current" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mW6-zs-Oj5">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -827,14 +827,14 @@
                             </binding>
                         </connections>
                     </button>
-                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kKR-RY-vAQ">
-                        <rect key="frame" x="126" y="384" width="336" height="20"/>
+                    <slider verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kKR-RY-vAQ">
+                        <rect key="frame" x="126" y="384" width="336" height="21"/>
                         <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="0.90000000000000002" tickMarkPosition="above" sliderType="linear" id="q9o-Sr-agV"/>
                         <connections>
                             <binding destination="Voe-Tx-rLC" name="value" keyPath="thresSens" id="Lxl-Az-Zyc"/>
                         </connections>
                     </slider>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HcZ-ll-cga">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HcZ-ll-cga">
                         <rect key="frame" x="18" y="386" width="70" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Track sens" id="887-eQ-H6u">
                             <font key="font" metaFont="system"/>
@@ -842,7 +842,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3eQ-H7-GNs">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3eQ-H7-GNs">
                         <rect key="frame" x="18" y="361" width="52" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Latency" id="qyJ-OO-hjY">
                             <font key="font" metaFont="system"/>
@@ -850,8 +850,8 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9ML-vD-XYc">
-                        <rect key="frame" x="126" y="359" width="336" height="20"/>
+                    <slider verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9ML-vD-XYc">
+                        <rect key="frame" x="126" y="359" width="336" height="21"/>
                         <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="htO-pz-tdd"/>
                         <connections>
                             <binding destination="Voe-Tx-rLC" name="value" keyPath="latency" id="rHg-0e-N4T"/>

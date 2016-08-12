@@ -84,7 +84,7 @@ double _releaseDelay;
 //    return false;
   
   NSPoint pp;
-    BOOL open = [self.behaviour shouldOpenWithTrackResult:tracked position:position at:time canOpen:canOpen outPos:&pp];
+  BOOL open = [self.behaviour shouldOpenWithTrackResult:tracked position:position at:time canOpen:canOpen outPos:&pp];
   
   if(open) {
     open = [self shouldOpenForPos:pp];
@@ -124,25 +124,10 @@ double _releaseDelay;
   
   [self setMatrixValueAtX:xImg y:yImg to:origVal];
   
-  for(int x = 1; x <= 3; x++) {
+  for(int x = 1; x <= 10; x++) {
     float addFieldValue = [self ease:self.stepsize * x];
     [self addValue:addFieldValue toXPlus:x x:xImg y:yImg];
   }
-  
-//  float addFieldValue = [self ease:self.stepsize];
-//  [self addValue:addFieldValue toXPlus:1 x:xImg y:yImg];
-//
-//  addFieldValue = [self ease:self.stepsize * 2];
-//  [self addValue:addFieldValue toXPlus:2 x:xImg y:yImg];
-//  
-//  addFieldValue = [self ease:self.stepsize * 3];
-//  [self addValue:addFieldValue toXPlus:3 x:xImg y:yImg];
-//  
-//  addFieldValue = [self ease:self.stepsize * 4];
-//  [self addValue:addFieldValue toXPlus:4 x:xImg y:yImg];
-//  
-//  addFieldValue = [self ease:self.stepsize * 5];
-//  [self addValue:addFieldValue toXPlus:5 x:xImg y:yImg];
 
   NSLog(@"(%d / %d) -> %f -> %@", xImg, yImg, origVal, (retVal)?@"true":@"false");
   
@@ -150,24 +135,29 @@ double _releaseDelay;
 }
 
 -(void) addValue:(float)val toXPlus:(int)diff_val x:(int)x y:(int)y {
-  for(int xpos = x - diff_val; xpos <= x + diff_val; xpos++) {
-    if(xpos >= 0) {
-      for(int ypos = y - diff_val; ypos <= y + diff_val; ypos++) {
-        if(ypos >= 0) {
-          if(xpos == x && ypos == y)
+  for(int ypos = y + diff_val; ypos >= y - diff_val; ypos--) {
+    if(ypos >= 0) {
+      for(int xpos = x - diff_val; xpos <= x + diff_val; xpos++) {
+        if(xpos >= 0) {
+          if(xpos == x && ypos == y){
+//            NSLog(@"XY");
             continue;
+          }
           
           float origVal = [self matrixValueAtX:xpos y:ypos];
           if(origVal < DITHER_MAX_TRESHOLD) {
-            origVal += (DITHER_MAX_TRESHOLD / (ABS(xpos - x) + ABS(ypos - y))) + val;
+            origVal += ((DITHER_MAX_TRESHOLD * 3) / (ABS(xpos - x) + ABS(ypos - y))) + val;
           } else {
             origVal = (origVal + val) * DITHER_VALUE_ADD_FAKTOR;
           }
+//          NSLog(@"%d/%d -> %.5f", xpos,ypos,origVal);
           [self setMatrixValueAtX:xpos y:ypos to:origVal];
         }
       }
+//      NSLog(@"\n");
     }
   }
+//  NSLog(@"\n\n");
 }
 
 -(float) ease:(float)stepSum{
@@ -177,8 +167,8 @@ double _releaseDelay;
 
 -(void) drawMatrixInRect:(NSRect) rect {
   
-  float cellWidth = 1;
-  float cellHeight = 1;
+  float cellWidth = 2;
+  float cellHeight = 2;
   
   for(int x = 0; x < self.width; x++) {
     for(int y = 0; y < self.height; y++) {

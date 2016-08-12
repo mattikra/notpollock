@@ -184,7 +184,7 @@
     NSColor* color = [self.template colorAtX:lookX y:lookY];
     BOOL open = [color brightnessComponent] < 0.5;
     self.wasOpen = open;
-    
+  
     return open && canOpen;
 }
 
