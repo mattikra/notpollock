@@ -267,14 +267,13 @@
 
 - (void) visualizeInRect:(NSRect)rect {
     
-    NSRect templateRect = NSMakeRect(-1,-1,2,2);
-    
-    [self.template drawInRect:templateRect
-                     fromRect:NSMakeRect(0,0,self.template.pixelsWide,self.template.pixelsHigh)
-                    operation:NSCompositeMultiply
-                     fraction:0.5
-               respectFlipped:YES
-                        hints:NULL];
+//    NSRect templateRect = NSMakeRect(-1,-1,2,2);
+//    [self.template drawInRect:templateRect
+//                     fromRect:NSMakeRect(0,0,self.template.pixelsWide,self.template.pixelsHigh)
+//                    operation:NSCompositeMultiply
+//                     fraction:0.5
+//               respectFlipped:YES
+//                        hints:NULL];
 
     NSBezierPath* path = nil;
     NSArray<NSDate*>* dates = [self.lastTrackPoints.allKeys sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
