@@ -52,8 +52,8 @@
         self.template = (NSBitmapImageRep*)[NSImageRep imageRepWithContentsOfURL:url];
         self.wasOpen = NO;
         self.idlePoint = NSMakePoint(0,0);
-        self.idleHeight = 1.0;
-        self.releaseDelay = 0.15;
+        self.idleHeight = CAN_HEIGHT;
+        self.releaseDelay = VALVE_LATENCY;
     }
     return self;
 }

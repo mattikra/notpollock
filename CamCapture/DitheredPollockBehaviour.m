@@ -52,7 +52,7 @@ double _releaseDelay;
     self.height = DITHER_MATRIX_HEIGHT;
     self.matrixData = [NSMutableData dataWithLength:sizeof(float) * self.width * self.height];
     self.stepsize = (ABS(DITHER_GRID_MAX_VALUE) + ABS(DITHER_GRID_MIN_VALUE)) / ABS(MAX(DITHER_MATRIX_WIDTH, DITHER_MATRIX_HEIGHT));  // calculate the step size for our matrix
-    self.stepsize = floorf(self.stepsize * ROUND_VAL) / ROUND_VAL;
+//    self.stepsize = floorf(self.stepsize * ROUND_VAL) / ROUND_VAL;
     float max_val = MAX(ABS(DITHER_GRID_MIN_VALUE), ABS(DITHER_GRID_MAX_VALUE));
     self.coordMove = max_val;
     
@@ -94,75 +94,66 @@ double _releaseDelay;
 }
 
 -(BOOL)shouldOpenForPos:(NSPoint)point {
-  
-  BOOL retVal = false;
-//  int major = MAX(self.width, self.height);
-  int xImg = [self getMatrixPositionFor:point.x];
-  int yImg = [self getMatrixPositionFor:point.y];
-  
-//  NSLog(@"%f x %f -> %d x %d", point.x, point.y, xImg, yImg);
-  
-  float origVal = [self matrixValueAtX:xImg y:yImg];
-  
-  //    float testval = 1.3f;
-  //    NSLog(@"0: %.5f", testval);
-  //    for (int x = 1; x < 1000; x++) {
-  //      testval = testval * DITHER_VALUE_ADD_FAKTOR;
-  //      if(testval < 1.0) {
-  //        testval += 1 + DITHER_VALUE_ADD;
-  //        NSLog(@"%d: %.5f", x, testval);
-  //      }
-  //    }
-  
-  if(origVal < DITHER_MAX_TRESHOLD) {
-    retVal = true;
-    origVal += DITHER_MAX_TRESHOLD + DITHER_VALUE_ADD;
-  } else {
-    retVal = false;
-    origVal = origVal * DITHER_VALUE_ADD_FAKTOR;
-  }
-  
-  [self setMatrixValueAtX:xImg y:yImg to:origVal];
-  
-  for(int x = 1; x <= 10; x++) {
-    float addFieldValue = [self ease:self.stepsize * x];
-    [self addValue:addFieldValue toXPlus:x x:xImg y:yImg];
-  }
+    
+    int xImg = [self getMatrixPositionFor:point.x];
+    int yImg = [self getMatrixPositionFor:point.y];
+    float origVal = [self matrixValueAtX:xImg y:yImg];
+    
+    BOOL retVal = (origVal < 1.0);
+    NSLog(@"drop blocked due to dither: %i",retVal);
+    if (retVal) {
+        [self drawBlobAtX:xImg Y:yImg radius:DITHER_RADIUS height:pow(2,DITHER_DEAD_TIME_MIN)];
+    }
 
-  NSLog(@"(%d / %d) -> %f -> %@", xImg, yImg, origVal, (retVal)?@"true":@"false");
-  
   return retVal;
 }
 
--(void) addValue:(float)val toXPlus:(int)diff_val x:(int)x y:(int)y {
-  for(int ypos = y + diff_val; ypos >= y - diff_val; ypos--) {
-    if(ypos >= 0) {
-      for(int xpos = x - diff_val; xpos <= x + diff_val; xpos++) {
-        if(xpos >= 0) {
-          if(xpos == x && ypos == y){
-//            NSLog(@"XY");
-            continue;
-          }
-          
-          float origVal = [self matrixValueAtX:xpos y:ypos];
-          if(origVal < DITHER_MAX_TRESHOLD) {
-            origVal += ((DITHER_MAX_TRESHOLD * 3) / (ABS(xpos - x) + ABS(ypos - y))) + val;
-          } else {
-            origVal = (origVal + val) * DITHER_VALUE_ADD_FAKTOR;
-          }
-//          NSLog(@"%d/%d -> %.5f", xpos,ypos,origVal);
-          [self setMatrixValueAtX:xpos y:ypos to:origVal];
+- (void) regularService {
+    [self decayArray];
+    [self decayArray];
+    [self decayArray];
+}
+
+- (void)drawBlobAtX:(int)x Y:(int)y radius:(int)rad height:(float)height {
+    int minx = MAX(0, x-rad);
+    int miny = MAX(0, y-rad);
+    int maxx = MIN(self.width-1, x+rad);
+    int maxy = MIN(self.height-1, y+rad);
+    for (int yy=miny; yy<=maxy; yy++) {
+        for (int xx=minx; xx<=maxx; xx++) {
+            float dist = sqrt((xx-x)*(xx-x) + (yy-y)*(yy-y));
+            float ease = height * [self ease:dist / rad];
+            float val = [self matrixValueAtX:xx y:yy];
+            val += ease;
+            [self setMatrixValueAtX:xx y:xx to:val];
         }
-      }
-//      NSLog(@"\n");
     }
-  }
-//  NSLog(@"\n\n");
+}
+
+- (void)decayArray {
+    //array should half its values about once per minute
+    static int currentRow = 0;
+    static float decayFactor = 1;
+    currentRow = (currentRow+1) % self.height;
+    if (currentRow == 0) {
+        NSTimeInterval now = [[NSDate date] timeIntervalSinceReferenceDate];
+        static NSTimeInterval lastTime = 0;
+        if (lastTime > 0) {
+            double timeDiff = now - lastTime;   //last full scan pass duration in s
+            decayFactor = pow (0.5, timeDiff / 60.0);
+            NSLog(@"array decay %f",decayFactor);
+
+        }
+        lastTime = now;
+    }
+    for (int x=0; x<self.width; x++) {
+        [self setMatrixValueAtX:x y:currentRow to:[self matrixValueAtX:x y:currentRow] * decayFactor];
+    }
 }
 
 -(float) ease:(float)stepSum{
   //  e^(-(x/.006)^2)/33.3
-  return expf(-powf(2, (stepSum/(self.stepsize*3))))/33.3f;
+  return expf(-powf( (stepSum/(self.stepsize*3)), 2.0)) / 33.3f;
 }
 
 -(void) drawMatrixInRect:(NSRect) rect {

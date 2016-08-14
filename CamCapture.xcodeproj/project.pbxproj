@@ -19,6 +19,7 @@
 		39A523271CEA37A400990789 /* FakeMarkerDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A523261CEA37A400990789 /* FakeMarkerDetector.m */; };
 		39A523291CEA86A300990789 /* template.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A523281CEA86A300990789 /* template.png */; };
 		39B06D8A1CECA41F003AD76E /* ValveCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B06D891CECA41F003AD76E /* ValveCommunicator.m */; };
+		39DF591A1D60C3B2006D6966 /* pollock1.png in Resources */ = {isa = PBXBuildFile; fileRef = 39DF59191D60C3B2006D6966 /* pollock1.png */; };
 		470BE2B41D50B7AC00B1ECDA /* Slice2.png in Resources */ = {isa = PBXBuildFile; fileRef = 470BE2B31D50B7AC00B1ECDA /* Slice2.png */; };
 		470BE2B61D50BA5000B1ECDA /* Slice3.png in Resources */ = {isa = PBXBuildFile; fileRef = 470BE2B51D50BA5000B1ECDA /* Slice3.png */; };
 		470BE2B81D50C8C000B1ECDA /* Slice4.png in Resources */ = {isa = PBXBuildFile; fileRef = 470BE2B71D50C8C000B1ECDA /* Slice4.png */; };
@@ -57,6 +58,7 @@
 		39A523281CEA86A300990789 /* template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = template.png; sourceTree = "<group>"; };
 		39B06D881CECA41F003AD76E /* ValveCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValveCommunicator.h; sourceTree = "<group>"; };
 		39B06D891CECA41F003AD76E /* ValveCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValveCommunicator.m; sourceTree = "<group>"; };
+		39DF59191D60C3B2006D6966 /* pollock1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pollock1.png; sourceTree = "<group>"; };
 		470BE2B31D50B7AC00B1ECDA /* Slice2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Slice2.png; sourceTree = "<group>"; };
 		470BE2B51D50BA5000B1ECDA /* Slice3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Slice3.png; sourceTree = "<group>"; };
 		470BE2B71D50C8C000B1ECDA /* Slice4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Slice4.png; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				39B06D891CECA41F003AD76E /* ValveCommunicator.m */,
 				47D23B151CF71E7B0070FDC0 /* Dithering */,
 				3987C8F61CD9613B004031DC /* Assets.xcassets */,
+				39DF59191D60C3B2006D6966 /* pollock1.png */,
 				47DB1D7B1D4FA31000E34C3D /* Slice.png */,
 				470BE2B31D50B7AC00B1ECDA /* Slice2.png */,
 				470BE2B51D50BA5000B1ECDA /* Slice3.png */,
@@ -237,6 +240,7 @@
 				470BE2B41D50B7AC00B1ECDA /* Slice2.png in Resources */,
 				390C63141D5A5370000790FF /* Slice6.png in Resources */,
 				470BE2B81D50C8C000B1ECDA /* Slice4.png in Resources */,
+				39DF591A1D60C3B2006D6966 /* pollock1.png in Resources */,
 				47DB1D7C1D4FA31000E34C3D /* Slice.png in Resources */,
 				39A523291CEA86A300990789 /* template.png in Resources */,
 				470BE2BA1D50CB7C00B1ECDA /* Slice5.png in Resources */,

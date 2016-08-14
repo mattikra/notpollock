@@ -14,7 +14,7 @@
 #define BEHAVIOUR_CLASS SimplePollockBehaviour
 #define BEHAVIOUR_HEADER "SimplePollockBehaviour.h"
 
-#define TEMPLATE_NAME @"Slice6"
+#define TEMPLATE_NAME @"pollock1"
 
 //tracking parameters
 #define THRESHOLD_PERCENT 90 /* threshold with x percent of brightest pixel */
@@ -25,7 +25,7 @@
 #define ROI_SIZE 0.533
 
 //path estimation properties
-#define MIN_TRACK_SEQUENCE 10
+#define MIN_TRACK_SEQUENCE 20
 //#define ESTIMATE_QUADRATIC YES
 #define ESTIMATE_SINUSOIDAL YES
 
@@ -47,3 +47,7 @@
 #define DITHER_VALUE_ADD 0.3             /* Value to add to a field */
 #define DITHER_VALUE_ADD_FAKTOR 0.9      /* Value to add to a field */
 #define DITHER_MAX_TRESHOLD 1.0          /* if x >= value is reached do not fire/open */
+
+
+#define DITHER_RADIUS 10
+#define DITHER_DEAD_TIME_MIN 5

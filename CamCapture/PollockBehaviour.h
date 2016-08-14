@@ -31,6 +31,8 @@
 /* optional method to show current state. Transform is set to put ROI (draw canvas) at -1/1 rect */
 - (void) visualizeInRect:(NSRect)rect;
 
+/* will be called regularly if implemented to do internal service stuff */
+- (void) regularService;
 
 
 

@@ -43,6 +43,8 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    NSLog(@"pow(2,3) = %f",pow(2,3));
+    NSLog(@"pow(3,2) = %f",pow(3,2));
     self.grabber = [CameraGrabber new];
     self.valve = [ValveCommunicator new];
     self.grabber.delegate = self;
@@ -80,6 +82,9 @@
 }
 
 - (void) handleCameraFrame:(NSBitmapImageRep*)frame timestamp:(NSDate*)timestamp {
+    if ([self.behaviour respondsToSelector:@selector(regularService)]) {
+        [self.behaviour regularService];
+    }
     NSPoint pos;
     BOOL detected = NO;
     
