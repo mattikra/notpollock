@@ -14,7 +14,7 @@
 #define BEHAVIOUR_CLASS SimplePollockBehaviour
 #define BEHAVIOUR_HEADER "SimplePollockBehaviour.h"
 
-#define TEMPLATE_NAME @"Slice2"
+#define TEMPLATE_NAME @"ernst1"
 
 //tracking parameters
 #define THRESHOLD_PERCENT 61.6 /* threshold with x percent of brightest pixel */

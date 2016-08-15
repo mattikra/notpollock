@@ -50,6 +50,7 @@
         bzero(sinXCoeffs,sizeof(sinXCoeffs));
         bzero(sinYCoeffs,sizeof(sinYCoeffs));
         self.template = (NSBitmapImageRep*)[NSImageRep imageRepWithContentsOfURL:url];
+        NSLog(@"Template read ok: %@",(self.template ? @"YES":@"NO"));
         self.wasOpen = NO;
         self.idlePoint = NSMakePoint(0,0);
         self.idleHeight = CAN_HEIGHT;
