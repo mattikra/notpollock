@@ -14,7 +14,7 @@
 #define BEHAVIOUR_CLASS SimplePollockBehaviour
 #define BEHAVIOUR_HEADER "SimplePollockBehaviour.h"
 
-#define TEMPLATE_NAME @"ernst1"
+#define TEMPLATE_NAME @"square1"
 
 //tracking parameters
 #define THRESHOLD_PERCENT 61.6 /* threshold with x percent of brightest pixel */
@@ -47,4 +47,4 @@
 #define DITHER_MAX_TRESHOLD 1.0          /* if x >= value is reached do not fire/open */
 
 #define DITHER_RADIUS 8
-#define DITHER_DEAD_TIME_MIN 1
+#define DITHER_DEAD_TIME_MIN 5
